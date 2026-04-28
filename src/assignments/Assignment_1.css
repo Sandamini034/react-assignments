@@ -39,3 +39,10 @@ button{
     background-repeat: no-repeat;
     background-position: center;
 }
+
+body{
+    background-image: url("../assets/lemon_tree.avif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
