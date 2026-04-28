@@ -1,10 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import {HashRouter,Route,Routes} from 'react-router-dom'
+import Assignment_1 from "./assignments/Assignment_1.jsx"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Assignment_1/>}></Route>
+      </Routes>
+    </HashRouter>
   </StrictMode>,
 )
