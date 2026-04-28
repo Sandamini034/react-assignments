@@ -8,6 +8,7 @@ createRoot(document.getElementById('root')).render(
     <HashRouter>
       <Routes>
         <Route path="/" element={<Assignment_1/>}></Route>
+        <Route path="/ASG-01" element={<Assignment_1/>}></Route>
       </Routes>
     </HashRouter>
   </StrictMode>,
