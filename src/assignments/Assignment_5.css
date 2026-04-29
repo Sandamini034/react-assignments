@@ -1,0 +1,14 @@
+.buttonBox{
+    display:flex;
+    gap:20px;
+    margin-top:10px;
+}
+
+ul{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+.btns{
+    display:flex;
+}
