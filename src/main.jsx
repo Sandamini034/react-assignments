@@ -3,6 +3,10 @@ import { createRoot } from "react-dom/client";
 import { HashRouter, Link, Route, Routes } from "react-router-dom";
 import Assignment_1 from "./assignments/Assignment_1.jsx";
 import Assignment_2 from "./assignments/Assignment_2.jsx";
+import Assignment_3 from "./assignments/Assignment_3.jsx";
+import Assignment_4 from "./assignments/Assignment_4.jsx";
+import Assignment_5 from "./assignments/Assignment_5.jsx";
+import Assignment_6 from "./assignments/Assignment_6.jsx";
 import Home from "./assignments/home.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -12,6 +16,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Home />}></Route>
         <Route path="/ASG-01" element={<Assignment_1 />}></Route>
         <Route path="/ASG-02" element={<Assignment_2 />}></Route>
+        <Route path="/ASG-03" element={<Assignment_3 />}></Route>
+        <Route path="/ASG-04" element={<Assignment_4 />}></Route>
+        <Route path="/ASG-05" element={<Assignment_5 />}></Route>
+        <Route path="/ASG-06" element={<Assignment_6 />}></Route>
       </Routes>
     </HashRouter>
   </StrictMode>

@@ -9,6 +9,10 @@ function Home(){
         <h1>React Assignments</h1>
         <Link to="/ASG-01" >Assignment-01</Link>
         <Link to="/ASG-02" >Assignment-02</Link>
+        <Link to="/ASG-03" >Assignment-03</Link>
+        <Link to="/ASG-04" >Assignment-04</Link>
+        <Link to="/ASG-05" >Assignment-05</Link>
+        <Link to="/ASG-06" >Assignment-06</Link>
         </nav>
         </div>
     )
