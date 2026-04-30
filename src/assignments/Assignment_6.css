@@ -1,3 +1,14 @@
 ol{
-    padding:0px;
+    padding:0;
+}
+.inputBox{
+    display:flex;
+    gap:5px;
+    padding:10px;
+}
+
+.box4 h2{
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    padding:10px;
+    border:solid 1px black;
 }
