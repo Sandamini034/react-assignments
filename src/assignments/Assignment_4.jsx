@@ -5,18 +5,23 @@ function Assignment_4() {
   const [array, setArray] = useState([]);
   const [total, setTotal] = useState(0);
   const [number, setNumber] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const average = array.length > 0 ? total / array.length : 0;
   const num = Number(number);
 
   const add = () => {
+    setDisabled(true);
+
     if (number === "" || isNaN(num)) {
-      alert("Please enter a numeric value!");
+      setDisabled(false);
       return;
     }
 
+    setDisabled(false);
     setArray([...array, num]);
     setTotal(total + num);
+    setNumber("");
   };
 
   const del = (index) => {
@@ -47,7 +52,7 @@ function Assignment_4() {
           onChange={(e) => setNumber(e.target.value)}
         ></input>
         <br></br>
-        <button onClick={add}>Add</button>
+        <button onClick={add} disabled={disabled}>Add</button>
       </div>
     </>
   );
