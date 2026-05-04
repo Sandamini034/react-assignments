@@ -1,0 +1,11 @@
+.inputBox2{
+    display:flex;
+    gap:10px;
+    padding:10px;
+    justify-content: center;
+    border:solid 1px white;
+    position:absolute;
+    left:35%;
+    top:50px;
+    margin:0;
+}

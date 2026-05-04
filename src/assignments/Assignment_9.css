@@ -1,0 +1,23 @@
+
+select{
+    appearance: base-select;
+    border:solid 1px #ccc;
+    color:white;
+}
+
+::picker(select){
+    appearance: base-select;
+}
+
+select::picker-icon{
+    transition:500ms ease;
+    padding:1px;
+}
+
+select:open::picker-icon{
+    rotate:180deg;
+}
+
+.pageBox{
+    position:absolute;
+}
