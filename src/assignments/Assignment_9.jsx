@@ -47,8 +47,6 @@ function Assignment_9() {
           value={searchText}
           disabled={disabled}
           onChange={(e) => {setSearchText(e.target.value);
-            setPage(0);
-            setTotal(0);
           }}
         />
         <button onClick={fetchData} disabled={disabled}>
