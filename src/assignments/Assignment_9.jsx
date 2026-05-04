@@ -6,11 +6,12 @@ function Assignment_9() {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(30);
   const [disabled, setDisabled] = useState(false);
+  const [total, setTotal ]= useState(969);
 
   const pageNumbers = Array.from(
-    { length: Math.ceil(100 / limit) },
+    { length: Math.ceil( total/ limit) },
     (_, i) => i
   );
 
@@ -23,6 +24,7 @@ function Assignment_9() {
       )
       .then((response) => {
         setData(response.data.data);
+        setTotal(response.data.total);
         setDisabled(false);
       })
       .catch((error) => {
@@ -37,30 +39,37 @@ function Assignment_9() {
 
   return (
     <>
+      <h1 id="color-header">Color Search</h1>
       <div className="inputBox2">
         <input
           type="text"
           placeholder="Search..."
           value={searchText}
           disabled={disabled}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => {setSearchText(e.target.value);
+            setPage(0);
+            setTotal(0);
+          }}
         />
         <button onClick={fetchData} disabled={disabled}>
           Search
         </button>
         <select
           value={limit}
-          onChange={(e) => setLimit(Number(e.target.value))}
+          onChange={(e) => {setLimit(Number(e.target.value));
+            setPage(0);
+          }}
         >
-          <option value={10}>10</option>
-          <option value={20}>20</option>
           <option value={30}>30</option>
+          <option value={35}>35</option>
+          <option value={40}>40</option>
         </select>
       </div>
       <div className="colorBox">
         <h1>Colors</h1>
         <br></br>
         <div className="color-box">
+          
           <ul>
             {data.map((item) => (
               <li key={item.name} style={{ color: item.code }}>

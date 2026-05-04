@@ -20,8 +20,23 @@ select:open::picker-icon {
 .pageBox {
   position: absolute;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 5px;
-  top: 170px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 150px;
+  left: 40%;
+  width:90vw;
+  transform: translateX(-40%);
+}
+
+.pageBox button{
+    width:35px;
+}
+
+#color-header{
+    color:white;
+    position:absolute;
+    display: block;
+    top:0px;
+    left:41vw;
 }

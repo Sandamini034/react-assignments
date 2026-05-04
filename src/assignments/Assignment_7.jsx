@@ -17,8 +17,9 @@ function Assignement_7() {
   }, []);
 
   return (
-    <div className="colorBox">
-      <h1>Colors</h1>
+    <>
+    <h1 id="header">Colors</h1>
+     <div className="colorBox">
       <div className="color-box">
         {data.map((item, index) => (
           <ul key={index}>
@@ -26,7 +27,8 @@ function Assignement_7() {
           </ul>
         ))}
       </div>
-    </div>
+    </div></>
+   
   );
 }
 

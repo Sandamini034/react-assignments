@@ -27,6 +27,7 @@ function Assignment_8() {
 
   return (
     <>
+      <h1 id="header2">Color</h1>
       <div className="inputBox2">
         <input
           type="text"
