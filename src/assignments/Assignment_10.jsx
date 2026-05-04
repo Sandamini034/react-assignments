@@ -12,9 +12,9 @@ function Assignment_10(){
         email: email,
         password: password
     }).then((response) => {
-        setMsg("Login Successful!");
+        setMsg("");
     }).catch((error) => {
-        setMsg("Login failed. Please check your credentials and try again.");
+        setMsg(error.message);
     });
   }
 
