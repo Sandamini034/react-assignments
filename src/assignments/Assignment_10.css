@@ -1,0 +1,35 @@
+
+.login-box{
+    border:1px solid white;
+    padding:20px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    border-radius: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+}
+
+.login-box h1{
+   color:white;
+   display:flex;
+   justify-content:center;
+}
+
+.login-box h3{
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+.login-box input{
+    height:30px;
+    border-radius:5px;
+    border:1px solid black;
+    padding-left:10px;
+}
+
+.login-box button:active{
+    background-color: black;
+    color:white;
+}
