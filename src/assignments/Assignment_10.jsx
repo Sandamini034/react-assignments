@@ -12,6 +12,7 @@ function Assignment_10(){
         email: email,
         password: password
     }).then((response) => {
+        console.log(response.data);
         setMsg("Login Successful");
     }).catch((error) => {
         setMsg(error.message);
