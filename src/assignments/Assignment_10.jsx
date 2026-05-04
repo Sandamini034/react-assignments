@@ -12,7 +12,7 @@ function Assignment_10(){
         email: email,
         password: password
     }).then((response) => {
-        setMsg("");
+        setMsg("Login Successful");
     }).catch((error) => {
         setMsg(error.message);
     });
