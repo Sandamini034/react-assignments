@@ -5,28 +5,25 @@ import axios from "axios";
 function Assignment_8() {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get("https://apis.dnjs.lk/objects/colors.php")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }, []);
-
-  const search = (searchText) => {
+  const search = () => {
+    setDisabled(true);
     axios
       .get("https://apis.dnjs.lk/objects/colors.php?search=" + searchText)
       .then((response) => {
         setData(response.data);
+        setDisabled(false);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
+        setDisabled(false);
       });
   };
+
+  useEffect(() => {
+    search();
+  }, []);
 
   return (
     <>
@@ -35,9 +32,11 @@ function Assignment_8() {
           type="text"
           placeholder="Search..."
           value={searchText}
+          disabled={disabled}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button onClick={() => search(searchText)}>Search</button>
+        <button disabled={disabled}
+        onClick={() => search(searchText)}>Search</button>
       </div>
       <div className="colorBox">
         <h1>Colors</h1>
@@ -45,7 +44,7 @@ function Assignment_8() {
         <div className="color-box">
           <ul>
             {data.map((item, index) => (
-              <li key={index}>{item.name}</li>
+              <li key={index} style={{color:item.code}}>{item.name}</li>
             ))}
           </ul>
         </div>

@@ -7,7 +7,9 @@ function Assignment_6() {
   const [ruleValue, setRuleValue] = useState("");
 
   const add = () => {
-    if (!ruleName || !ruleValue) {
+    const trimmed = ruleName.trim();
+  
+    if (!trimmed|| !ruleValue) {
       alert("Please enter both rule name and rule value!");
       return;
     }

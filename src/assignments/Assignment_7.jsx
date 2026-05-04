@@ -22,7 +22,7 @@ function Assignement_7() {
       <div className="color-box">
         {data.map((item, index) => (
           <ul key={index}>
-            <li>{item.name}</li>
+            <li style={{color:item.code}}>{item.name}</li>
           </ul>
         ))}
       </div>

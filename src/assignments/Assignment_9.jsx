@@ -7,41 +7,33 @@ function Assignment_9() {
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get("https://apis.dnjs.lk/objects/colors.php")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }, []);
-
-  const search = (searchText) => {
-    axios
-      .get("https://apis.dnjs.lk/objects/colors.php?search=" + searchText)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  };
+  const pageNumbers = Array.from(
+    { length: Math.ceil(100 / limit) },
+    (_, i) => i
+  );
 
   const fetchData = () => {
+    setData([]);
+    setDisabled(true);
     axios
       .get(
         ` https://apis.dnjs.lk/objects/colors.php?search=${searchText}&page=${page}&limit=${limit}`
       )
       .then((response) => {
-        setData(response.data);
+        setData(response.data.data);
+        setDisabled(false);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
+        setDisabled(false);
       });
-  }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [page, limit]);
 
   return (
     <>
@@ -50,10 +42,16 @@ function Assignment_9() {
           type="text"
           placeholder="Search..."
           value={searchText}
+          disabled={disabled}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button onClick={() => search(searchText)}>Search</button>
-        <select value={limit} onChange={(e) => setLimit(e.target.value)}>
+        <button onClick={fetchData} disabled={disabled}>
+          Search
+        </button>
+        <select
+          value={limit}
+          onChange={(e) => setLimit(Number(e.target.value))}
+        >
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={30}>30</option>
@@ -65,19 +63,23 @@ function Assignment_9() {
         <div className="color-box">
           <ul>
             {data.map((item) => (
-              <li key={item.id}>{item.name}</li>
+              <li key={item.name} style={{ color: item.code }}>
+                {item.name}
+              </li>
             ))}
           </ul>
         </div>
       </div>
       <div className="pageBox">
-        <button onClick={() => setPage(page - 1)} disabled={page === 0}>
-          Previous
-        </button>
-        <span> Page {page + 1} </span>
-        <button onClick={() => {setPage(page + 1);
-          fetchData();
-        } }>Next</button>
+        {pageNumbers.map((num) => (
+          <button
+            key={num}
+            onClick={() => setPage(num)}
+            disabled={disabled || page === num}
+          >
+            {num + 1}
+          </button>
+        ))}
       </div>
     </>
   );
