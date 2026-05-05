@@ -24,6 +24,7 @@
 
 .login-box input{
     height:30px;
+    width:250px;
     border-radius:5px;
     border:1px solid black;
     padding-left:10px;
