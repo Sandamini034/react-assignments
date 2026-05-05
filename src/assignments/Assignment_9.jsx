@@ -8,19 +8,22 @@ function Assignment_9() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(30);
   const [disabled, setDisabled] = useState(false);
-  const [total, setTotal ]= useState(969);
+  const [total, setTotal] = useState(969);
 
   const pageNumbers = Array.from(
-    { length: Math.ceil( total/ limit) },
-    (_, i) => i
+    { length: Math.ceil(total / limit) },
+    (_, i) => i + 1
   );
 
-  const fetchData = () => {
+  const fetchData = (load) => {
     setData([]);
     setDisabled(true);
+
+    const currentPage = load !== undefined ? load : page;
+
     axios
       .get(
-        ` https://apis.dnjs.lk/objects/colors.php?search=${searchText}&page=${page}&limit=${limit}`
+        ` https://apis.dnjs.lk/objects/colors.php?search=${searchText}&page=${currentPage}&limit=${limit}`
       )
       .then((response) => {
         setData(response.data.data);
@@ -34,8 +37,12 @@ function Assignment_9() {
   };
 
   useEffect(() => {
+    fetchData(1);
+  }, [limit]);
+
+  useEffect(() => {
     fetchData();
-  }, [page, limit]);
+  }, [page]);
 
   return (
     <>
@@ -46,16 +53,18 @@ function Assignment_9() {
           placeholder="Search..."
           value={searchText}
           disabled={disabled}
-          onChange={(e) => {setSearchText(e.target.value);
+          onChange={(e) => {
+            setSearchText(e.target.value);
           }}
         />
-        <button onClick={fetchData} disabled={disabled}>
+        <button onClick={() => fetchData(1)} disabled={disabled}>
           Search
         </button>
         <select
           value={limit}
-          onChange={(e) => {setLimit(Number(e.target.value));
-            setPage(0);
+          onChange={(e) => {
+            setLimit(Number(e.target.value));
+            setPage(1);
           }}
         >
           <option value={30}>30</option>
@@ -67,7 +76,6 @@ function Assignment_9() {
         <h1>Colors</h1>
         <br></br>
         <div className="color-box">
-          
           <ul>
             {data.map((item) => (
               <li key={item.name} style={{ color: item.code }}>
@@ -84,7 +92,7 @@ function Assignment_9() {
             onClick={() => setPage(num)}
             disabled={disabled || page === num}
           >
-            {num + 1}
+            {num}
           </button>
         ))}
       </div>
