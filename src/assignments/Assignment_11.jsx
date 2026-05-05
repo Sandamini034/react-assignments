@@ -1,8 +1,7 @@
 import axios from "axios";
 import {useState} from "react";
-import "./Assignment_10.css";
 
-function Assignment_10(){
+function Assignment_11(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
@@ -14,10 +13,26 @@ function Assignment_10(){
     }).then((response) => {
         console.log(response.data);
         setMsg("Login Successful");
+
+        axios
+        .get("https://auth.dnjs.lk/api/user", {
+          headers: {
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          console.log("Request completed");
+        });
     }).catch((error) => {
-        //console.log(error.response.data.error.message);
-        setMsg(error.response.data.error.message);
+        setMsg(error.message);
     });
+
   }
 
 
@@ -38,4 +53,4 @@ return(
 )
 }
 
-export default Assignment_10;
+export default Assignment_11;
