@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function Assignment_11() {
+function Assignment_12() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
 
   const login = () => {
     setDisabled(true);
@@ -19,7 +19,6 @@ function Assignment_11() {
       .then((response) => {
         console.log(response.data);
         setMsg("Login Successful");
-        setLoggedIn(true);
         setDisabled(false);
 
         axios
@@ -30,7 +29,15 @@ function Assignment_11() {
           })
           .then((response) => {
             console.log(response.data);
-            setUserData(response.data);
+            const fetchedUserData = response.data;
+            setUserData(fetchedUserData);
+
+            if(keepLoggedIn){
+              localStorage.setItem("userData", JSON.stringify(fetchedUserData));
+            }else{
+              sessionStorage.setItem("userData", JSON.stringify(fetchedUserData));
+            } 
+    
           })
           .catch((error) => {
             console.error(error);
@@ -45,21 +52,29 @@ function Assignment_11() {
       });
   };
 
+  useEffect(()=>{
+    const storedUserData = localStorage.getItem("userData") || sessionStorage.getItem("userData");
+    if(storedUserData){
+      setUserData(JSON.parse(storedUserData));
+    }
+  },[]);
+
+  const logout=()=>{
+    setUserData(null);
+    localStorage.removeItem("userData");
+    sessionStorage.removeItem("userData");
+  }
+  
   return (
     <>
-      {loggedIn ? (
+      {userData? (
         <div className="container2">
-          {userData ? (
-            <>
               <h1>{userData.name}</h1>
               <img src={userData.avatar}></img>
               <pre>{JSON.stringify(userData, null, 1)}</pre>
-            </>
-          ) : (
-            <p>Loading user data...</p>
-          )}{" "}
+              <button onClick={logout}>Logout</button>
         </div>
-      ) : (
+      ):  (
         <div className="login-box">
           <h1>Login</h1>
           <input
@@ -80,11 +95,15 @@ function Assignment_11() {
             Login
           </button>
 
+          <div className="login">
+              <input type="checkbox" onChange={(e)=>setKeepLoggedIn(e.target.checked)}></input>
+              <label>Keep me logged in</label>
+          </div>
           {msg && <h3>{msg}</h3>}
         </div>
-      )}
+      ) }
     </>
   );
 }
 
-export default Assignment_11;
+export default Assignment_12;

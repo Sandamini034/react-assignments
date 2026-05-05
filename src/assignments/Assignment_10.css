@@ -1,13 +1,14 @@
 
 .login-box{
-    border:1px solid white;
-    padding:20px;
-    display: flex;
-    flex-direction: column;
-    gap:10px;
-    border-radius: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 450px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.6);
 }
 
 .login-box h1{
@@ -24,13 +25,34 @@
 
 .login-box input{
     height:30px;
-    width:250px;
+    width:440px;
     border-radius:5px;
     border:1px solid black;
-    padding-left:10px;
 }
 
 .login-box button:active{
     background-color: black;
     color:white;
+}
+
+.login-box button{
+    height:30px;
+    width:450px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.login{
+    display: flex;
+    justify-content: center;
+}
+
+.login input[type="checkbox"]{
+    width:20px;
+    height:20px;
+}
+
+.login label{
+    padding-top:4px;
+    padding-left:5px;
 }
