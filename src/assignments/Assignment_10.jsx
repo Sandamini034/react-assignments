@@ -16,7 +16,7 @@ function Assignment_10(){
         setMsg("Login Successful");
     }).catch((error) => {
         //console.log(error.response.data.error.message);
-        setMsg(error.response.data.error.message);
+        setMsg(error?.response?.data?.error?.message??"An error occurred");
     });
   }
 
