@@ -60,3 +60,28 @@
 .login input[type="checkbox"]:hover{
     cursor: pointer;
 }
+
+.edit{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    gap:10px;
+    padding:10px;
+    border:1px solid white;
+    border-radius: 5px;
+}
+
+.edit input{
+    height:30px;
+    width:420px;
+    border-radius:5px;
+    border:1px solid black;
+}
+
+.edit button{
+    font-size:15px;
+}
+
+.edit h3{
+    color:white
+}

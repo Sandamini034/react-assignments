@@ -1,4 +1,5 @@
 .container2 {
+  top:5vh;
   gap: 20px;
   display: flex;
   flex-direction: column;
@@ -9,6 +10,7 @@
   width: 450px;
   border-radius: 15px;
   box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.6);
+  position:relative;
 }
 
 .container2 h1,
@@ -33,3 +35,6 @@ body {
   height: 97vh;
 }
 
+.container2 h1{
+  margin-top:50px;
+}

@@ -8,6 +8,7 @@ function Assignment_14() {
   const [disabled, setDisabled] = useState(false);
   const [userData, setUserData] = useState(null);
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
 
   const login = () => {
     setDisabled(true);
@@ -17,6 +18,8 @@ function Assignment_14() {
         password: password,
       })
       .then((response) => {
+        const newToken = response.data.access_token;
+        setToken(newToken);
         console.log(response.data);
         setMsg("Login Successful");
         setDisabled(false);
@@ -24,7 +27,7 @@ function Assignment_14() {
         axios
           .get("https://auth.dnjs.lk/api/user", {
             headers: {
-              Authorization: `Bearer ${response.data.access_token}`,
+              Authorization: `Bearer ${newToken}`,
             },
           })
           .then((response) => {
@@ -33,12 +36,9 @@ function Assignment_14() {
             setUserData(fetchedUserData);
 
             if (keepLoggedIn) {
-              localStorage.setItem("userData", JSON.stringify(fetchedUserData));
+              localStorage.setItem("accessToken", token);
             } else {
-              sessionStorage.setItem(
-                "userData",
-                JSON.stringify(fetchedUserData)
-              );
+              sessionStorage.setItem("accessToken", token);
             }
           })
           .catch((error) => {
@@ -55,22 +55,67 @@ function Assignment_14() {
   };
 
   useEffect(() => {
-    const storedUserData =
-      localStorage.getItem("userData") || sessionStorage.getItem("userData");
-    if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
+    const storedToken =
+      localStorage.getItem("accessToken") ||
+      sessionStorage.getItem("accessToken");
+    if (storedToken) {
+      axios
+        .get("https://auth.dnjs.lk/api/user", {
+          header: { Authorization: `Bearer ${storedToken}` },
+        })
+        .then((response) => {
+          setUserData(response.data);
+          setToken(storedToken);
+        })
+        .catch(() => {
+          localStorage.removeItem("accessToken");
+          sessionStorage.removeItem("accessToken");
+        });
     }
   }, []);
 
   const logout = () => {
-    axios.post("https://auth.dnjs.lk/api/logout", {}, {
-      headers: {
-        Authorization: `Bearer ${userData.access_token}`,
-      },
-    })
+    axios.post(
+      "https://auth.dnjs.lk/api/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     setUserData(null);
-    localStorage.removeItem("userData");
-    sessionStorage.removeItem("userData");
+    localStorage.removeItem("accessToken");
+    sessionStorage.removeItem("accessToken");
+    setEmail("");
+    setPassword("");
+    setMsg("");
+  };
+
+  const updateUserData = () => {
+    axios
+      .put(
+        "https://auth.dnjs.lk/api/user",
+        {
+          name: userData.name,
+          description: userData.description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const updatedToken = response.data.access_token;
+        const storage = localStorage.getItem("accessToken")
+          ? localStorage
+          : sessionStorage;
+        storage.setItem("accessToken", updatedToken);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -79,7 +124,37 @@ function Assignment_14() {
         <div className="container2">
           <h1>{userData.name}</h1>
           <img src={userData.avatar}></img>
-          <pre>{JSON.stringify(userData, null, 1)}</pre>
+          <pre>
+            {JSON.stringify(
+              userData,
+              ["id", "email", "subscribed", "description"],
+              1
+            )}
+          </pre>
+          <div className="edit">
+            <h3>Edit User Data</h3>
+            <input
+              type="text"
+              value={userData.name}
+              onChange={(e) =>
+                setUserData({ ...userData, name: e.target.value })
+              }
+            ></input>
+            <input
+              type="text"
+              value={userData.description}
+              onChange={(e) =>
+                setUserData({ ...userData, description: e.target.value })
+              }
+            ></input>
+            <button
+              onClick={() => {
+                updateUserData();
+              }}
+            >
+              Save
+            </button>
+          </div>
           <button onClick={logout}>Logout</button>
         </div>
       ) : (

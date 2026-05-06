@@ -8,6 +8,7 @@ function Assignment_13() {
   const [disabled, setDisabled] = useState(false);
   const [userData, setUserData] = useState(null);
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
 
   const login = () => {
     setDisabled(true);
@@ -20,11 +21,13 @@ function Assignment_13() {
         console.log(response.data);
         setMsg("Login Successful");
         setDisabled(false);
+        const newToken = response.data.access_token;
+        setToken(newToken);
 
         axios
           .get("https://auth.dnjs.lk/api/user", {
             headers: {
-              Authorization: `Bearer ${response.data.access_token}`,
+              Authorization: `Bearer ${newToken}`,
             },
           })
           .then((response) => {
@@ -33,12 +36,9 @@ function Assignment_13() {
             setUserData(fetchedUserData);
 
             if (keepLoggedIn) {
-              localStorage.setItem("userData", JSON.stringify(fetchedUserData));
+              localStorage.setItem("accessToken", token);
             } else {
-              sessionStorage.setItem(
-                "userData",
-                JSON.stringify(fetchedUserData)
-              );
+              sessionStorage.setItem("accessToken", token);
             }
           })
           .catch((error) => {
@@ -55,22 +55,41 @@ function Assignment_13() {
   };
 
   useEffect(() => {
-    const storedUserData =
-      localStorage.getItem("userData") || sessionStorage.getItem("userData");
-    if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
+    const storedToken =
+      localStorage.getItem("accessToken") ||
+      sessionStorage.getItem("accessToken");
+    if (storedToken) {
+      axios
+        .get("https://auth.dnjs.lk/api/user", {
+          header: { Authorization: `Bearer ${storedToken}` },
+        })
+        .then((response) => {
+          setUserData(response.data);
+          setToken(storedToken);
+        })
+        .catch(() => {
+          localStorage.removeItem("accessToken");
+          sessionStorage.removeItem("accessToken");
+        });
     }
   }, []);
 
   const logout = () => {
-    axios.post("https://auth.dnjs.lk/api/logout", {}, {
-      headers: {
-        Authorization: `Bearer ${userData.access_token}`,
-      },
-    })
+    axios.post(
+      "https://auth.dnjs.lk/api/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     setUserData(null);
     localStorage.removeItem("userData");
     sessionStorage.removeItem("userData");
+    setEmail("");
+    setPassword("");
+    setMsg("");
   };
 
   return (
