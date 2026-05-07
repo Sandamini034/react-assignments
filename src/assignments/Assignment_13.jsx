@@ -1,138 +1,151 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+ //helpers
+ const baseURL = import.meta.env.VITE_API_BASE_URL;
+ const instance = axios.create({
+   baseURL: baseURL,
+ });
+
+ //code is using an axios request interceptor to automatically
+ //attach an authentication token to every HTTP request
+
+ //=============== Note===============
+ //An interceptor runs before every request is sent to the server
+ instance.interceptors.request.use((config) => {
+   const token = localStorage.getItem("token_13") || sessionStorage.getItem("token_13");
+   if (token) {
+     config.headers.Authorization = token;
+   }
+   return config;
+ });
+
+function LogginScreen({email, setEmail, password, setPassword, setKeepLoggedIn, disabled, msg, login}) {
+  return(
+    <div className="login-box">
+      <h1>Login</h1>
+      <input
+        type="email"
+        placeholder="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        disabled={disabled}
+      />
+      <input
+        type="password"
+        placeholder="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        disabled={disabled}
+      />
+      <button onClick={login} disabled={disabled}>
+        Login
+      </button>
+      <div className="login">
+        <input
+          type="checkbox"
+          onChange={(e) => setKeepLoggedIn(e.target.checked)}
+        />
+        <label>Keep me logged in</label>
+      </div>
+      {msg && <h3>{msg}</h3>}
+    </div>
+  ) 
+}
+
+function ProfileScreen({userData, logout}) {
+  return(
+    <div className="container2">
+      <h1>{userData.name}</h1>
+      <img src={userData.avatar} />
+      <pre>{JSON.stringify(userData, null, 1)}</pre>
+      <button onClick={logout}>Logout</button>
+    </div>
+  )
+}
+
 function Assignment_13() {
+
+  const [msg, setMsg] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = () => {
+  const fetchUserData = async () => {
+    try {
+      const resp = await instance.get("/user");
+      setUserData(resp.data);
+      setMsg("");
+    } catch (err) {
+      setMsg(err?.response?.data?.error?.message ?? "Error occurred");
+    }finally{
+      setLoading(false);
+    }
+  };
+
+  const login = async () => {
     setDisabled(true);
-    axios
-      .post("https://auth.dnjs.lk/api/login", {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setMsg("Login Successful");
-        setDisabled(false);
-        const newToken = response.data.access_token;
-        setToken(newToken);
+    try {
+      const resp = await instance.post("/login", { email, password });
+      if (keepLoggedIn) {
+        localStorage.setItem("token_13", resp.data.access_token);
+      } else {
+        sessionStorage.setItem("token_13", resp.data.access_token);
+      }
+      setMsg("");
+      await fetchUserData();
+    } catch (err) {
+      setMsg(err?.response?.data?.error?.message ?? "Error occurred");
+    }
+    setDisabled(false);
+  };
 
-        axios
-          .get("https://auth.dnjs.lk/api/user", {
-            headers: {
-              Authorization: `Bearer ${newToken}`,
-            },
-          })
-          .then((response) => {
-            console.log(response.data);
-            const fetchedUserData = response.data;
-            setUserData(fetchedUserData);
-
-            if (keepLoggedIn) {
-              localStorage.setItem("accessToken", token);
-            } else {
-              sessionStorage.setItem("accessToken", token);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            console.log("Request completed");
-          });
-      })
-      .catch((error) => {
-        setMsg(error?.response?.data?.error?.message ?? "An error occurred");
-        setDisabled(false);
-      });
+  const logout = async () => {
+    setDisabled(true);
+    try {
+      await instance.post("/logout");
+      localStorage.removeItem("token_13");
+      sessionStorage.removeItem("token_13");
+      setUserData(null);
+      setMsg("");
+    } catch (err) {
+      setMsg(err?.response?.data?.error?.message ?? "Error occurred");
+    }
+    setDisabled(false);
   };
 
   useEffect(() => {
-    const storedToken =
-      localStorage.getItem("accessToken") ||
-      sessionStorage.getItem("accessToken");
-    if (storedToken) {
-      axios
-        .get("https://auth.dnjs.lk/api/user", {
-          header: { Authorization: `Bearer ${storedToken}` },
-        })
-        .then((response) => {
-          setUserData(response.data);
-          setToken(storedToken);
-        })
-        .catch(() => {
-          localStorage.removeItem("accessToken");
-          sessionStorage.removeItem("accessToken");
-        });
+    const token = localStorage.getItem("token_13") || sessionStorage.getItem("token_13");
+    if (token) {
+      fetchUserData();
+    }else{
+      setLoading(false);
     }
   }, []);
 
-  const logout = () => {
-    axios.post(
-      "https://auth.dnjs.lk/api/logout",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    setUserData(null);
-    localStorage.removeItem("userData");
-    sessionStorage.removeItem("userData");
-    setEmail("");
-    setPassword("");
-    setMsg("");
-  };
-
   return (
-    <>
-      {userData ? (
-        <div className="container2">
-          <h1>{userData.name}</h1>
-          <img src={userData.avatar}></img>
-          <pre>{JSON.stringify(userData, null, 1)}</pre>
-          <button onClick={logout}>Logout</button>
-        </div>
+    <div className="container">
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : userData ? (
+        <ProfileScreen userData={userData} logout={logout} />
       ) : (
-        <div className="login-box">
-          <h1>Login</h1>
-          <input
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={disabled}
-          ></input>
-          <input
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={disabled}
-          ></input>
-          <button onClick={login} disabled={disabled}>
-            Login
-          </button>
-
-          <div className="login">
-            <input
-              type="checkbox"
-              onChange={(e) => setKeepLoggedIn(e.target.checked)}
-            ></input>
-            <label>Keep me logged in</label>
-          </div>
-          {msg && <h3>{msg}</h3>}
-        </div>
+        <LogginScreen
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          setKeepLoggedIn={setKeepLoggedIn}
+          disabled={disabled}
+          msg={msg}
+          login={login}
+        />
       )}
-    </>
+      
+    </div>
   );
 }
 
