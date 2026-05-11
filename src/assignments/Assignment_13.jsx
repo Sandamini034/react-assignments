@@ -111,5 +111,4 @@ export default function Assignment_13() {
   useEffect(() => { setLogged(getToken() !== null) }, []);
   if (logged === true) return <ProfileScreen setLogged={setLogged} />;
   if (logged === false) return <LoginScreen setLogged={setLogged} />
-  else return (<div className="login-box"><h1>Loading...</h1></div>);
 }
