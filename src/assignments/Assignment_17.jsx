@@ -1,5 +1,5 @@
 import "./Assignment_17.css";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 const colorMixer = (color1, color2, range) => {
   const r1 = parseInt(color1.slice(1, 3), 16);
@@ -48,11 +48,6 @@ function Assignment_17() {
   const [color1, setColor1] = useState("#ff0000");
   const [color2, setColor2] = useState("#0000ff");
   const [range, setRange] = useState(0);
-
-  useEffect(() => {
-    const colorDisplay = document.getElementById("colorDisplay");
-    colorDisplay.style.backgroundColor = colorMixer(color1, color2, range);
-  }, [color1, color2, range]);
 
   return (
     <div
