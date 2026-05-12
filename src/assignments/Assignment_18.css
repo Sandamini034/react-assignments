@@ -1,26 +1,27 @@
-#color1{
-    border:5px solid black;
+#color1 {
+  border: 5px solid black;
 }
 
-.buttonBox{
-    display:flex;
-    justify-content:space-around;
-    margin-top:10px;
+.buttonBox {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
 }
 
-#redButton{
-    background-color:red;
+#redButton {
+  background-color: red;
 }
 
-#blueButton{
-    background-color:blue;
+#blueButton {
+  background-color: blue;
 }
 
-#redButton, #blueButton{
-    color:white;
-    padding:10px 20px;
-    border:none;
-    cursor:pointer;
-    width:100px;
-    font-size: 20px;
+#redButton,
+#blueButton {
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  font-size: 20px;
 }
