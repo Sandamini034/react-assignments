@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Assignment_19(){
+function Assignment_19() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -24,35 +24,46 @@ function Assignment_19(){
     return <div className="colorMixer1">Loading...</div>;
   }
 
-  const setAnswerAndScore = (option,correctAnswer) => {
-    option===correctAnswer && setScore(prev=>prev+1);
-  }
+  const setAnswerAndScore = (option, correctAnswer) => {
+    option === correctAnswer && setScore((prev) => prev + 1);
+  };
 
-  function NextQA(){
-    return(
+  function NextQA() {
+    return (
       <div className="colorMixer1">
-      <h1>Question {currentQuestion+1}</h1>
-      {console.log(data)}
-      <h3>{data[currentQuestion].question}</h3>
-      <ol>
-        {data[currentQuestion].answers.map((option, index) => (
-          <li key={index}><input name="option" type="radio" onClick={()=>{{
-            const correct = data[currentQuestion].correct;
-            setAnswerAndScore(index,correct);
-            setCurrentQuestion(currentQuestion+1)};
-            }}></input>{option}
-        </li>
-        ))}
-      </ol>
-    </div>
-    )
+        <h1>Question {currentQuestion + 1}</h1>
+        {console.log(data)}
+        <h3>{data[currentQuestion].question}</h3>
+        <ol>
+          {data[currentQuestion].answers.map((option, index) => (
+            <li key={index}>
+              <input
+                name="option"
+                type="radio"
+                onClick={() => {
+                  {
+                    const correct = data[currentQuestion].correct;
+                    setAnswerAndScore(index, correct);
+                    setCurrentQuestion(currentQuestion + 1);
+                  }
+                }}
+              ></input>
+              {option}
+            </li>
+          ))}
+        </ol>
+      </div>
+    );
   }
 
-  return (
-    currentQuestion === data.length ? <div className="colorMixer1">
+  return currentQuestion === data.length ? (
+    <div className="colorMixer1">
       <h1>Quiz Completed!</h1>
-      <h2>Your Score: {score} / {data.length}</h2>
-      </div> :
+      <h2>
+        Your Score: {score} / {data.length}
+      </h2>
+    </div>
+  ) : (
     <NextQA />
   );
 }
