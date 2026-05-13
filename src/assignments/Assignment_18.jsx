@@ -73,18 +73,17 @@ function Assignment_18() {
           <div className="buttonBox">
             <button
               id="redButton"
-              value="red"
-              onClick={(e) => {
-                removeColor(e.target.value);
+              onClick={() => {
+                removeColor("red");
               }}
             >
               red
             </button>
+            
             <button
               id="blueButton"
-              value="blue"
-              onClick={(e) => {
-                removeColor(e.target.value);
+              onClick={() => {
+                removeColor("blue");
               }}
             >
               blue

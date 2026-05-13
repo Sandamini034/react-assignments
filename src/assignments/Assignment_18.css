@@ -25,3 +25,23 @@
   width: 100px;
   font-size: 20px;
 }
+
+input[type="radio"]{
+  height:10px;
+  cursor: pointer;
+}
+
+.colorMixer1 li{
+  display:flex;
+  align-items:center;
+}
+
+.colorMixer1 ol{
+  display:flex;
+  flex-direction:column;
+  flex-wrap:wrap;
+  padding:0;
+  list-style: none;
+}
+
+
