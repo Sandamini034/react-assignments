@@ -1,31 +1,65 @@
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Review(data){
-  return(
+function NextQA({
+  data,
+  currentQuestion,
+  setCurrentQuestion,
+  setAnswerAndScore,
+}) {
+  const [selected, setSelected] = useState(null);
+  const correct = data[currentQuestion].correct;
+  const [answers, setAnswers ]= useState([]);
+
+  const handleSelect = (index) => {
+    if (selected !== null) return;
+    setSelected(index);
+    setAnswerAndScore(index, correct);
+    setAnswers(answers => [...answers, correct]);
+
+    setTimeout(() => {
+      setSelected(null);
+      setCurrentQuestion(currentQuestion + 1);
+    }, 800);
+  };
+  return (
     <div className="colorMixer1">
-        <h1>Question {currentQuestion + 1}</h1>
-        <h3>{data[currentQuestion].question}</h3>
-        <ol>
-          {data[currentQuestion].answers.map((option, index) => (
-            <li key={index}>
+      <h1>Question {currentQuestion + 1}</h1>
+      {console.log(data)}
+      <h3>{data[currentQuestion].question}</h3>
+      <ol>
+        {data[currentQuestion].answers.map((option, index) => (
+          <li key={index}>
+            <label>
               <input
                 name="option"
                 type="radio"
-                onClick={() => {
+                checked={selected == index}
+                onChange={() => {
                   {
-                    const correct = data[currentQuestion].correct;
-                    setAnswerAndScore(index, correct);
-                    setCurrentQuestion(currentQuestion + 1);
+                    handleSelect(index);
                   }
                 }}
               ></input>
               {option}
-            </li>
-          ))}
-        </ol>
-      </div>
+            </label>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function ReviewQA({ data, currentQuestion, setCurrentQuestion }) {
+
+  return(
+    <div className="colorMixer1">
+      <h1>Question {currentQuestion + 1}</h1>
+      <button>Next</button>
+      <button>Last</button>
+    </div>
   )
+
 }
 
 function Assignment_20() {
@@ -33,7 +67,6 @@ function Assignment_20() {
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [answer, setAnswer]= useState(null);
 
   useEffect(() => {
     axios
@@ -56,43 +89,25 @@ function Assignment_20() {
     option === correctAnswer && setScore((prev) => prev + 1);
   };
 
-  function NextQA() {
-    return (
-      <div className="colorMixer1">
-        <h1>Question {currentQuestion + 1}</h1>
-        {console.log(data)}
-        <h3>{data[currentQuestion].question}</h3>
-        <ol>
-          {data[currentQuestion].answers.map((option, index) => (
-            <li key={index}>
-              <input
-                name="option"
-                type="radio"
-                onClick={() => {
-                  {
-                    const correct = data[currentQuestion].correct;
-                    setAnswerAndScore(index, correct);
-                    setCurrentQuestion(currentQuestion + 1);
-                  }
-                }}
-              ></input>
-              {option}
-            </li>
-          ))}
-        </ol>
-      </div>
-    );
-  }
-
   return currentQuestion === data.length ? (
     <div className="colorMixer1">
       <h1>Quiz Completed!</h1>
       <h2>
         Your Score: {score} / {data.length}
       </h2>
+      <ReviewQA 
+      data={data}
+      currentQuestion={currentQuestion}
+      setCurrentQuestion={setCurrentQuestion}
+      />
     </div>
   ) : (
-    <NextQA />
+    <NextQA
+      data={data}
+      currentQuestion={currentQuestion}
+      setCurrentQuestion={setCurrentQuestion}
+      setAnswerAndScore={setAnswerAndScore}
+    />
   );
 }
 export default Assignment_20;
