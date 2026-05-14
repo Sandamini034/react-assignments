@@ -23,7 +23,6 @@ function NextQA({
   return (
     <div className="colorMixer1">
       <h1>Question {currentQuestion + 1}</h1>
-      {console.log(data)}
       <h3>{data[currentQuestion].question}</h3>
       <ol>
         {data[currentQuestion].answers.map((option, index) => (
@@ -51,12 +50,25 @@ function NextQA({
 function ReviewQA({ data, currentQuestion, setCurrentQuestion }) {
  
   const [questionNumber, setQuestionNumber] = useState(0);
+  const answers = data[questionNumber].correct;
   
   return (
     <div className="colorMixer1">
       <h1>Question {questionNumber + 1}</h1>
+      <ol>
+        {data[questionNumber].answers.map((option, index) => (
+          <li key={index}>
+            <label style={{color:index ===answers?"green":"black"}}>
+              {option}
+            </label>
+          </li>
+        ))}
+      </ol>
+      
+      <h2>{data[questionNumber].question}</h2>
+
       <button onClick={()=>{
-        if(questionNumber<data.length-1){
+        if(questionNumber<data.length){
           setQuestionNumber(questionNumber+1)
         }}}>Next</button>
       <button onClick={()=>{
