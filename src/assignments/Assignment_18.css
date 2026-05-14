@@ -41,7 +41,10 @@ input[type="radio"]{
   flex-direction:column;
   flex-wrap:wrap;
   padding:0;
-  list-style: none;
+}
+
+.colorMixer1 label{
+  color:black;
 }
 
 
