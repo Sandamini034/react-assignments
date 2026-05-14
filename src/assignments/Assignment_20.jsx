@@ -9,6 +9,7 @@ function NextQA({
 }) {
   const [selected, setSelected] = useState(null);
   const correct = data[currentQuestion].correct;
+  const [givenAnswer, setGivenAnswer] = useState(null);
 
   const handleSelect = (index) => {
     if (selected !== null) return;
@@ -35,6 +36,7 @@ function NextQA({
                 onChange={() => {
                   {
                     handleSelect(index);
+                    setGivenAnswer(index);
                   }
                 }}
               ></input>
@@ -47,7 +49,7 @@ function NextQA({
   );
 }
 
-function ReviewQA({ data, currentQuestion, setCurrentQuestion }) {
+function ReviewQA({ data}) {
  
   const [questionNumber, setQuestionNumber] = useState(0);
   const answers = data[questionNumber].correct;
@@ -114,8 +116,6 @@ function Assignment_20() {
       </h2>
       <ReviewQA
         data={data}
-        currentQuestion={currentQuestion}
-        setCurrentQuestion={setCurrentQuestion}
       />
     </div>
   ) : (
