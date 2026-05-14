@@ -9,13 +9,11 @@ function NextQA({
 }) {
   const [selected, setSelected] = useState(null);
   const correct = data[currentQuestion].correct;
-  const [answers, setAnswers ]= useState([]);
 
   const handleSelect = (index) => {
     if (selected !== null) return;
     setSelected(index);
     setAnswerAndScore(index, correct);
-    setAnswers(answers => [...answers, correct]);
 
     setTimeout(() => {
       setSelected(null);
@@ -51,15 +49,22 @@ function NextQA({
 }
 
 function ReviewQA({ data, currentQuestion, setCurrentQuestion }) {
-
-  return(
+ 
+  const [questionNumber, setQuestionNumber] = useState(0);
+  
+  return (
     <div className="colorMixer1">
-      <h1>Question {currentQuestion + 1}</h1>
-      <button>Next</button>
-      <button>Last</button>
+      <h1>Question {questionNumber + 1}</h1>
+      <button onClick={()=>{
+        if(questionNumber<data.length-1){
+          setQuestionNumber(questionNumber+1)
+        }}}>Next</button>
+      <button onClick={()=>{
+        if(questionNumber>0){
+          setQuestionNumber(questionNumber-1)}
+        }}>Last</button>
     </div>
-  )
-
+  );
 }
 
 function Assignment_20() {
@@ -95,10 +100,10 @@ function Assignment_20() {
       <h2>
         Your Score: {score} / {data.length}
       </h2>
-      <ReviewQA 
-      data={data}
-      currentQuestion={currentQuestion}
-      setCurrentQuestion={setCurrentQuestion}
+      <ReviewQA
+        data={data}
+        currentQuestion={currentQuestion}
+        setCurrentQuestion={setCurrentQuestion}
       />
     </div>
   ) : (
