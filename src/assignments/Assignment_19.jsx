@@ -57,14 +57,17 @@ function NextQA({
   const [selected, setSelected] = useState(null);
   const correct = data[currentQuestion].correct;
   const [hovered, setHovered] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const handleSelect = (index) => {
     if (selected !== null) return;
     setSelected(index);
     setAnswerAndScore(index, correct);
+    setDisabled(true);
 
     setTimeout(() => {
       setSelected(null);
+      setDisabled(false);
       setCurrentQuestion(currentQuestion + 1);
     }, 800);
   };
@@ -83,6 +86,7 @@ function NextQA({
                   checked={selected == index}
                   onMouseEnter={() => setHovered(true)}
                   onMouseLeave={() => setHovered(false)}
+                  disabled={disabled}
                   onClick={() => {
                     {
                       handleSelect(index);
