@@ -1,146 +1,171 @@
-.colorMixer11{
-    background-image: url(../assets/quiz.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    border:1px solid white;
-    border-radius: 15px;
-    width:60vw;
-    min-height:90vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    align-content:center;
-    flex-wrap:wrap;
-    padding:15px;
+.colorMixer11 {
+  background-image: url(../assets/quiz.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid white;
+  border-radius: 15px;
+  width: 60vw;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
 }
 
-.colorMixer11 h1{
-    color:white;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.8);
+.colorMixer11 h1 {
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.8);
 }
 
-.colorMixer11 li{
-    list-style: none;
+.colorMixer11 li {
+  list-style: none;
 }
 
-.colorMixer11 button{
-    width:300px;
-    padding:10px;
-    cursor:pointer;
-    font-size: 20px;
-    background-color:black;
-    color:white;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.5);
+.colorMixer11 button {
+  width: 300px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  background-color: black;
+  color: white;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  box-shadow: 0 0 20px rgba(0, 0, 255, 0.5);
 }
 
-.colorMixer11 button:hover{
-    background-color:#ff5555;
-    color:black;
-    box-shadow:#ff5555 0 0 20px;
+.colorMixer11 button:hover {
+  background-color: #ff5555;
+  color: black;
+  box-shadow: #ff5555 0 0 20px;
 }
 
-.colorMixer11 h3{
-    color:white;
-    text-shadow: 0 0 5px rgba(255, 0, 255, 0.8);
+.colorMixer11 h3 {
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 0, 255, 0.8);
 }
 
-.colorMixer11 h2{
-    color:white;
-    text-shadow: 0 0 5px rgba(255, 0, 255, 0.8);
+.colorMixer11 h2 {
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 0, 255, 0.8);
 }
 
-.buttonBox11{
-    margin-top: 20px;
+.buttonBox11 {
+  margin-top: 20px;
 }
 
-.bubble1{
-    width:70px ;
-    height:50px;
-    border-radius:0px 40px 0 40px;
-    background-color: #010101;
-    margin-top:50px;
-    box-shadow:0 0 10px rgba(58, 63, 201, 0.8),0 20px 20px rgba(9, 13, 119, 0.5);
-    animation:pulse 1s infinite;
-    animation-play-state: paused;
+.bubble1 {
+  width: 70px;
+  height: 50px;
+  border-radius: 0px 40px 0 40px;
+  background-color: #010101;
+  margin-top: 50px;
+  box-shadow: 0 0 10px rgba(58, 63, 201, 0.8), 0 20px 20px rgba(9, 13, 119, 0.5);
+  animation: pulse 1s infinite;
+  animation-play-state: paused;
 }
 
-.eyeball1{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background-color:#3537a1;
-    margin-top:10px;
-    margin-left:15px;
+.eyeball1 {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #3537a1;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 
-.pupil1{
-    width:15px;
-    height:15px;
-    border-radius:50%;
-    background-color:#30C5FF;
-    margin-top:7px;
-    margin-left:7px;
+.pupil1 {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #30c5ff;
+  margin-top: 7px;
+  margin-left: 7px;
 }
 
-.bubble2{
-    width:70px ;
-    height:50px;
-    border-radius:40px 0px 40px 0px;
-    background-color: #010101;
-    margin-top:50px;
-    box-shadow:0 0 10px rgba(58, 63, 201, 0.8),0 20px 20px rgba(9, 13, 119, 0.5);
-    animation:pulse 1s infinite;
-    animation-play-state: paused;
+.bubble2 {
+  width: 70px;
+  height: 50px;
+  border-radius: 40px 0px 40px 0px;
+  background-color: #010101;
+  margin-top: 50px;
+  box-shadow: 0 0 10px rgba(58, 63, 201, 0.8), 0 20px 20px rgba(9, 13, 119, 0.5);
+  animation: pulse 1s infinite;
+  animation-play-state: paused;
 }
 
-.eyeball2{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background-color:#3537a1;
-    margin-top:10px;
-    margin-left:15px;
+.eyeball2 {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #3537a1;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 
-.pupil2{
-    width:15px;
-    height:15px;
-    border-radius:50%;
-    background-color:#30C5FF;
-    margin-top:7px;
-    margin-left:7px;
+.pupil2 {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #30c5ff;
+  margin-top: 7px;
+  margin-left: 7px;
 }
 
-@keyframes pulse{
-    0%{
-        transform: scale(1);
-        box-shadow:0 0 10px rgba(58, 63, 201, 0.8),0 20px 20px rgba(9, 13, 119, 0.5);
-    }
-    50%{
-        transform: scale(1.1);
-        box-shadow:0 0 20px rgba(58, 63, 201, 1),0 30px 30px rgba(9, 13, 119, 0.7);
-    }
-    100%{
-        transform: scale(1);
-        box-shadow:0 0 10px rgba(58, 63, 201, 0.8),0 20px 20px rgba(9, 13, 119, 0.5);
-    }
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(58, 63, 201, 0.8),
+      0 20px 20px rgba(9, 13, 119, 0.5);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(58, 63, 201, 1), 0 30px 30px rgba(9, 13, 119, 0.7);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(58, 63, 201, 0.8),
+      0 20px 20px rgba(9, 13, 119, 0.5);
+  }
 }
 
-.watchOwl{
-    display:flex;
-    gap:10px;
+.watchOwl {
+  display: flex;
+  gap: 10px;
 }
 
-.colorMixer11 img{
-    width:300px;
-    height:300px;
-    margin-top: 15px;
-    border-radius:50px 50px 50px 50px;
-    box-shadow:0 0 10px rgba(255, 0, 0, 0.8),0 20px 20px rgba(255, 0, 255, 0.5);
+.colorMixer11 img {
+  width: 300px;
+  height: 300px;
+  margin-top: 15px;
+  border-radius: 50px 50px 50px 50px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 20px 20px rgba(255, 0, 255, 0.5);
 }
 
-#start{
-    margin-top:40px;
+#start {
+  margin-top: 40px;
 }
 
+.review {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: rgba(50, 50, 70, 0.8);
+}
+
+.review label {
+  color: white;
+  font-size: 22px;
+}
+
+.review button {
+  margin-top: 10px;
+}
+
+.review h3 {
+  padding: 10px;
+}
