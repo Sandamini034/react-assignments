@@ -61,7 +61,7 @@ canvas{
     overflow: visible;
     flex-shrink:1;
     gap:20px;  
-    min-height: 90vh; 
+    min-height: 80vh; 
 }
 
 .side-menu{
