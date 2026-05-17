@@ -57,6 +57,8 @@ canvas{
 .display{
     display:flex;
     align-items: center; 
+    flex-wrap:wrap;
+    overflow: visible;
     flex-shrink:1;
     gap:20px;  
     min-height: 90vh; 
