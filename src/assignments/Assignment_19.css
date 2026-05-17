@@ -171,3 +171,19 @@
 .review h3 {
   padding: 10px;
 }
+
+.colorMixer11 input[type="text"] {
+  padding: 5px;
+  font-size: 18px;
+  border-radius:10px;
+}
+
+.colorMixer11 img{
+  background-color:black;
+}
+
+.layout{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
