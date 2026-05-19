@@ -74,13 +74,11 @@ function Assignment_23() {
       );
 
       if (mode === "paste" && copiedDataRef.current) {
-        ctx.globalAlpha = 0.6;
         ctx.putImageData(
           copiedDataRef.current,
           x - size / 2,
           y - size / 2
         );
-        ctx.globalAlpha = 1;
       }
     };
 
@@ -111,7 +109,6 @@ function Assignment_23() {
 
         copiedDataRef.current = data;
         setMode("paste");
-        setMsg("Area copied!");
       } else {
         pastedPartsRef.current.push({
           data: copiedDataRef.current,
@@ -119,7 +116,6 @@ function Assignment_23() {
           y: y - size / 2,
         });
 
-        setMsg("Pasted!");
         redraw();
       }
     };
@@ -157,7 +153,6 @@ function Assignment_23() {
   const handleReset = () => {
     copiedDataRef.current = null;
     setMode("copy");
-    setMsg("Selection cleared");
     redraw();
   };
 
@@ -178,12 +173,6 @@ function Assignment_23() {
           />
           <button onClick={handleReset}>Reset</button>
         </div>
-
-        <h3>
-          {mode === "copy"
-            ? "Move mouse to select area → Click to copy"
-            : "Move mouse to preview → Click to paste"}
-        </h3>
 
         <canvas
           ref={canvasRef}
