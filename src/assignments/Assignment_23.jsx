@@ -199,7 +199,7 @@ function Assignment_23() {
             style={{ display: "none" }}
             onChange={uploadImage}
           />
-          <button
+          <button id="uploadBtn"
             onClick={() =>
               document.getElementById("fileInput").click()
             }

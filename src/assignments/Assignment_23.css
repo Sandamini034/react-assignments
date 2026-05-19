@@ -37,3 +37,7 @@
     cursor: pointer;
     border-radius: 50%;
 }
+
+.optionBtn #uploadBtn{
+    margin-top:-50px;
+}
