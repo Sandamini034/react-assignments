@@ -7,9 +7,9 @@ import Rock from "./rock.jsx";
 function CustomMenu({ onSelect }) {  
   return (
     <div className="customMenu">
-      <button onClick={() => onSelect("katara")}>Katara</button>
-      <button onClick={() => onSelect("yue")}>Yue</button>
-      <button onClick={() => onSelect("toph")}>Toph</button>
+      <button id="katara" onClick={() => onSelect("katara")}>Katara</button>
+      <button id="yue" onClick={() => onSelect("yue")}>Yue</button>
+      <button id="toph" onClick={() => onSelect("toph")}>Toph</button>
     </div>
   );
 }

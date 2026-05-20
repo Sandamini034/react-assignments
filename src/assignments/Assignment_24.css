@@ -53,3 +53,27 @@
 .contextMenu h1{
     color:white;
 }
+
+.customMenu{
+    width:200px;
+    height:150px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:10px;
+    border-radius:10px;
+    background-color: rgba(25,25,25,0.5);
+    box-shadow: 0 0 10px rgba(255,255,255);
+}
+
+.customMenu #katara{
+    background-color: blue;
+}
+
+.customMenu #yue{
+    background-color: white;
+}
+
+.customMenu #toph{
+    background-color: brown;
+}
