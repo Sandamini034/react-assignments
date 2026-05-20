@@ -1,0 +1,55 @@
+.contextMenu{
+    width:100vw;
+    height:100vh;
+    background-color:#00000050;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+@keyframes twinkle{
+    0%{
+        opacity:1;
+    }
+    50%{
+        opacity:0.5;
+    }
+    100%{
+        opacity:1;
+    }
+}
+
+@keyframes fly{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-20px);
+    }
+    100%{
+        transform:translateY(0px);
+    }
+    
+}
+
+.ball{
+    width:50px;
+    height:180px;
+    animation:move 8s linear infinite;
+}
+
+@keyframes move{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-200px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}
+
+.contextMenu h1{
+    color:white;
+}
