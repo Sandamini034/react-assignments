@@ -31,6 +31,7 @@ function Home(){
         <Link to="/ASG-22" >Assignment-22</Link>
         <Link to="/ASG-23" >Assignment-23</Link>
         <Link to="/ASG-24" >Assignment-24</Link>
+        <Link to="/ASG-25" >Assignment-25</Link>
         </nav>
         </div>
     )

@@ -1,0 +1,78 @@
+.card{
+    width:150px;
+    height: 100px;
+    perspective: 1000px;
+    background-color: #000000;
+    cursor:pointer;
+}
+
+.card-inner {
+
+    width: 100%;
+    height: 100%;
+    /* make cars sides in absolute positions */
+    position: relative;
+    /* rotation animation settings */
+    transition: transform 0.2s;
+    /* rotation depth */
+    transform-style: preserve-3d;
+  }
+  
+  /* while hovering the card */
+  .card.flipped .card-inner {
+    /* rotate the card inner around */
+    transform: rotateY(180deg);
+  }
+
+  .card-side {
+    /* get parent sizes */
+    width: 100%;
+    height: 100%;
+    /* place sides in absolute positions */
+    position: absolute;
+    /* hide back surfaces */
+    backface-visibility: hidden;
+    /* decorations */
+    background-color: #06f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:5px;
+    color: #fff;
+  }
+  
+  /* back card should be rotated initially */
+  .card-back {
+    transform: rotateY(180deg);
+  }
+
+  .displayBox{
+    display:grid;
+    gap:10px;
+    grid-template-columns: repeat(4, 1fr);
+    border:1px solid white;
+    padding:5px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(255,255,255,0.8);
+  }
+
+  .btnBox{
+    display:flex;
+  }
+
+  .btnBox button{
+    width:140px;
+    padding:10px;
+    margin:10px;
+    background-color:aqua;
+    font-size:20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border:none;
+  }
+
+  .btnBox button:hover{
+    background-color:#06f;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(0,0,255,0.8);
+  }
