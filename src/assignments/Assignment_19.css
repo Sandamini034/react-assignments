@@ -112,6 +112,66 @@
   margin-left: 7px;
 }
 
+.bubble3 {
+  width: 55px;
+  height: 50px;
+  border-radius: 0px 40px 0 40px;
+  background-color: #010101;
+  margin-top: 107px;
+  margin-left:-80px;
+  box-shadow: 0 0 10px rgba(58, 63, 201, 0.8), 0 20px 20px rgba(9, 13, 119, 0.5);
+  animation: pulse 1s infinite;
+  animation-play-state: paused;
+}
+
+.eyeball3 {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #3537a1;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.pupil3 {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #30c5ff;
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
+.bubble4 {
+  width: 55px;
+  height: 50px;
+  border-radius: 40px 0px 40px 0px;
+  background-color: #010101;
+  margin-top: 107px;
+  margin-left:-130px;
+  box-shadow: 0 0 10px rgba(58, 63, 201, 0.8), 0 20px 20px rgba(9, 13, 119, 0.5);
+  animation: pulse 1s infinite;
+  animation-play-state: paused;
+}
+
+.eyeball4 {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #3537a1;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.pupil4 {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #30c5ff;
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);
