@@ -6,7 +6,7 @@ function Assignment_26(){
 
     const [loading, setLoading] = useState(false)
 
-    useEffect =>(()=>{
+    useEffect(()=>{
         setLoading(true)
         setTimeout(()=>{
             setLoading(false)
