@@ -65,3 +65,36 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 1);
   }
 }
+
+.optionDisplay{
+  display:flex;
+  flex-direction:column;
+}
+
+.optionDisplay img{
+  width:200px;
+  padding:20px;
+}
+
+.imgDisplay{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  border:1px solid white;
+  border-radius:30px;
+  padding:5px;
+  margin-right:20px;
+}
+
+.imgDisplay img{
+  width:150px;
+  height:150px;
+}
+
+.imgDisplay button{
+  width:150px;
+  height:150px;
+  background-color: rgba(0,0,255,0.4);
+  font-size: 50px;
+}
+

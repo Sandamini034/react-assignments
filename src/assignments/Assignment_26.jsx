@@ -2,6 +2,8 @@ import "./Assignment_26.css";
 import Butterfly from "./Butterfly";
 import { useState, useEffect, useRef } from "react";
 import MoonSpirit from "../assets/moon_spirit_yue.jpg";
+import Toph from "../assets/katara.jpg";
+import Azula from "../assets/Azula.jpg";
 
 function sliderValue(sliderRef) {
   const el = sliderRef.current;
@@ -67,16 +69,27 @@ function moveEmptyCell(grid, direction) {
   let targetCol = col;
 
   switch (direction) {
-    case "up":    targetRow = row + 1; break;
-    case "down":  targetRow = row - 1; break;
-    case "left":  targetCol = col + 1; break;
-    case "right": targetCol = col - 1; break;
-    default: return grid;
+    case "up":
+      targetRow = row + 1;
+      break;
+    case "down":
+      targetRow = row - 1;
+      break;
+    case "left":
+      targetCol = col + 1;
+      break;
+    case "right":
+      targetCol = col - 1;
+      break;
+    default:
+      return grid;
   }
 
   if (
-    targetRow >= 0 && targetRow < grid.length &&
-    targetCol >= 0 && targetCol < grid[0].length
+    targetRow >= 0 &&
+    targetRow < grid.length &&
+    targetCol >= 0 &&
+    targetCol < grid[0].length
   ) {
     const newGrid = grid.map((r) => r.map((c) => ({ ...c })));
 
@@ -97,6 +110,53 @@ function moveEmptyCell(grid, direction) {
   return grid;
 }
 
+const uploadImage = (e, setSelectedImage) => {
+  const file = e.target.files[0];
+  const img = new Image();
+
+  img.onload = function () {
+    URL.revokeObjectURL(img.src);
+  };
+
+  setSelectedImage(URL.createObjectURL(file));
+};
+
+function SideMenu({ setSelectedImage }) {
+  return (
+    <div className="imgDisplay">
+      <img
+        src={MoonSpirit}
+        onClick={() => {
+          setSelectedImage("MoonSpirit");
+        }}
+      ></img>
+      <img
+        src={Toph}
+        onClick={() => {
+          setSelectedImage("Toph");
+        }}
+      ></img>
+      <img src={Azula} onClick={() => setSelectedImage("Azula")}></img>
+      <input
+        type="file"
+        style={{ display: "none" }}
+        id="selected"
+        accept="image/*"
+        onChange={(e) => uploadImage(e, setSelectedImage)}
+      ></input>
+      <button onClick={() => document.querySelector("#selected").click()}>
+        ⬆️
+      </button>
+    </div>
+  );
+}
+
+const imageMap = {
+  MoonSpirit: MoonSpirit,
+  Toph: Toph,
+  Azula: Azula,
+};
+
 function Assignment_26() {
   const [loading, setLoading] = useState(false);
   const sliderRef = useRef(null);
@@ -104,6 +164,9 @@ function Assignment_26() {
   const [grid, setGrid] = useState(() => createGrid(6));
   const [started, setStarted] = useState(false);
   const inputRef = useRef(null);
+  const [selectImage, setSelectedImage] = useState("MoonSpirit");
+  const [display, setDisplay] = useState("block");
+  const [displayQuit, setDisplayQuit] = useState("none");
 
   useEffect(() => {
     setLoading(true);
@@ -123,14 +186,14 @@ function Assignment_26() {
   }, [puzzleParts]);
 
   useEffect(() => {
-    if(!started)return;
+    if (!started) return;
 
     function handleKeyDown(e) {
-    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
         e.preventDefault();
-    }
-    
-      switch(e.key){
+      }
+
+      switch (e.key) {
         case "ArrowUp":
           setGrid((prevGrid) => moveEmptyCell(prevGrid, "up"));
           break;
@@ -147,47 +210,91 @@ function Assignment_26() {
           break;
       }
     }
-  window.addEventListener("keydown", handleKeyDown);
-  return () => window.removeEventListener("keydown", handleKeyDown);
-
-  },[started])
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [started]);
 
   if (loading) {
     return <Butterfly hovered={true} />;
   }
 
   return (
-    <div className="puzzelDisplay">
-      <div className="puzzelBox" ref={inputRef} style={{ backgroundColor: "#0f0f0f" }}>
-        {grid.map((row, i) => (
-          <div key={i} className="puzzleRow" style={{ display: "flex", width: "100%", height: `${600 / puzzleParts}px` }}>
-            {row.map((cell) => (
-              <div
-                key={`${cell.originalRow}-${cell.originalCol}`}
-                className="puzzlePart"
-                style={{
-                  width: `${600 / puzzleParts}px`,
-                  height: `${600 / puzzleParts}px`,
-                  backgroundImage: cell.isEmpty ? "none" : `url(${MoonSpirit})`,
-                  backgroundSize: `${600}px ${600}px`,
-                  backgroundPosition: `${(-cell.originalCol * 600) / puzzleParts}px ${(-cell.originalRow * 600) / puzzleParts}px`,
-                  backgroundColor: cell.isEmpty ? "#0f0f0f" : "transparent",
-                  borderRadius: "15px",
-                  border: "1px solid #0f0f0f",
-                }}
-              />
-            ))}
-          </div>
-        ))}
+    <div
+      className="optionDisplay"
+      style={{ display: "flex", flexDirection: "row" }}
+    >
+      <SideMenu setSelectedImage={setSelectedImage} />
+      <div className="puzzelDisplay">
+        <div
+          className="puzzelBox"
+          ref={inputRef}
+          style={{ backgroundColor: "#0f0f0f" }}
+        >
+          {grid.map((row, i) => (
+            <div
+              key={i}
+              className="puzzleRow"
+              style={{
+                display: "flex",
+                width: "100%",
+                height: `${600 / puzzleParts}px`,
+              }}
+            >
+              {row.map((cell) => (
+                <div
+                  key={`${cell.originalRow}-${cell.originalCol}`}
+                  className="puzzlePart"
+                  style={{
+                    width: `${600 / puzzleParts}px`,
+                    height: `${600 / puzzleParts}px`,
+                    backgroundImage: cell.isEmpty
+                      ? "none"
+                      : `url(${imageMap[selectImage] ?? selectImage})`,
+                    backgroundSize: `${600}px ${600}px`,
+                    backgroundPosition: `${
+                      (-cell.originalCol * 600) / puzzleParts
+                    }px ${(-cell.originalRow * 600) / puzzleParts}px`,
+                    backgroundColor: cell.isEmpty ? "#0f0f0f" : "transparent",
+                    borderRadius: "15px",
+                    border: "1px solid #0f0f0f",
+                  }}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          ref={sliderRef}
+          style={{ display: `${display}` }}
+          onChange={(e) => {
+            setPuzzleParts(getNumberOfParts(Number(e.target.value)));
+            sliderValue(sliderRef);
+          }}
+        />
+        <button
+          style={{ display: `${display}` }}
+          onClick={() => {
+            setStarted(true),
+              setGrid(shuffleGrid(grid)),
+              setDisplay("none"),
+              setDisplayQuit("block");
+          }}
+        >
+          Start Puzzel
+        </button>
+        <button
+          id="quit"
+          style={{ display: `${displayQuit}` }}
+          onClick={() => {
+            setDisplay("block"), setDisplayQuit("none");
+          }}
+        >
+          Quit Puzzel
+        </button>
       </div>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        ref={sliderRef}
-        onChange={(e) => {setPuzzleParts(getNumberOfParts(Number(e.target.value)));sliderValue(sliderRef)}}
-      />
-      <button onClick={()=>{setStarted(true),setGrid(shuffleGrid(grid))}}>Start Puzzel</button>
     </div>
   );
 }
