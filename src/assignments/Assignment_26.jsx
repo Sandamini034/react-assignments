@@ -283,7 +283,7 @@ function Assignment_26() {
               setDisplayQuit("block");
           }}
         >
-          Start Puzzel
+          Start Puzzle
         </button>
         <button
           id="quit"
@@ -293,7 +293,7 @@ function Assignment_26() {
             setGrid(createGrid(puzzleParts));
           }}
         >
-          Quit Puzzel
+          Quit Puzzle
         </button>
       </div>
     </div>
