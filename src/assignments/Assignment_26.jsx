@@ -121,30 +121,52 @@ const uploadImage = (e, setSelectedImage) => {
   setSelectedImage(URL.createObjectURL(file));
 };
 
-function SideMenu({ setSelectedImage }) {
+function SideMenu({ setSelectedImage, disabled }) {
   return (
     <div className="imgDisplay">
       <img
         src={MoonSpirit}
+        style={{
+          pointerEvents: disabled ? "none" : "auto",
+          opacity: disabled ? 0.4 : 1,
+        }}
         onClick={() => {
           setSelectedImage("MoonSpirit");
         }}
       ></img>
       <img
         src={Toph}
+        style={{
+          pointerEvents: disabled ? "none" : "auto",
+          opacity: disabled ? 0.4 : 1,
+        }}
         onClick={() => {
           setSelectedImage("Toph");
         }}
       ></img>
-      <img src={Azula} onClick={() => setSelectedImage("Azula")}></img>
+      <img
+        src={Azula}
+        style={{
+          pointerEvents: disabled ? "none" : "auto",
+          opacity: disabled ? 0.4 : 1,
+        }}
+        onClick={() => {
+          setSelectedImage("Azula");
+        }}
+      ></img>
       <input
         type="file"
         style={{ display: "none" }}
+        disabled={disabled}
         id="selected"
         accept="image/*"
         onChange={(e) => uploadImage(e, setSelectedImage)}
       ></input>
-      <button onClick={() => document.querySelector("#selected").click()}>
+      <button
+        onClick={() => {
+          document.querySelector("#selected").click();
+        }}
+      >
         ⬆️
       </button>
     </div>
@@ -223,7 +245,7 @@ function Assignment_26() {
       className="optionDisplay"
       style={{ display: "flex", flexDirection: "row" }}
     >
-      <SideMenu setSelectedImage={setSelectedImage} />
+      <SideMenu setSelectedImage={setSelectedImage} disabled={started} />
       <div className="puzzelDisplay">
         <div
           className="puzzelBox"
@@ -289,8 +311,10 @@ function Assignment_26() {
           id="quit"
           style={{ display: `${displayQuit}` }}
           onClick={() => {
-            setDisplay("block"), setDisplayQuit("none"),
-            setGrid(createGrid(puzzleParts));
+            setDisplay("block"),
+              setDisplayQuit("none"),
+              setGrid(createGrid(puzzleParts)),
+              setStarted(false);
           }}
         >
           Quit Puzzle
