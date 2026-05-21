@@ -1,54 +1,67 @@
-.puzzelDisplay{
-    width:700px;
-    height:750px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content: center;
-    background-color:#0f0f0f;
-    border-radius:50px;
-    border:1px solid white;
+.puzzelDisplay {
+  width: 700px;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0f0f0f;
+  border-radius: 50px;
+  border: 1px solid white;
 }
 
-.puzzelBox{
-    width:600px;
-    height:600px;
+.puzzelBox {
+  width: 600px;
+  height: 600px;
+  border-radius: 10px;
+  border:1px solid rgba(255,255,255,0.2);
 }
 
-.puzzelDisplay input[type="range"]{
-    -webkit-appearance: none;
-    width:600px;
-    margin-top:20px;
-    height:10px;
-    border-radius:2px;
+.puzzelDisplay input[type="range"] {
+  -webkit-appearance: none;
+  width: 600px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  background: #ffffff;
+  height: 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .puzzelDisplay input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background: rgba(25,25,25,0.8);
-    box-shadow:0 0 5px rgba(255,255,255,0.8);
-    cursor: pointer;
-    border-radius: 50%;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  border-radius: 50%;
 }
 
-.puzzelDisplay button{
-    padding:10px;
-    margin-top:10px;
-    width:600px;
-    font-size:18px;
-    color:white;
-    background-color: black;
-    box-shadow:0 0 10px rgba(255,255,255,0.8);
-    animation: glow 1s infinite alternate;
+.puzzelDisplay button {
+  padding: 10px;
+  margin-top: 10px;
+  width: 600px;
+  font-size: 18px;
+  color: white;
+  background-color: black;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: glow 1s infinite alternate;
 }
 
-@keyframes glow{
-    from{
-        box-shadow:0 0 5px rgba(255,255,255,0.8);
-    }
-    to{
-        box-shadow:0 0 10px rgba(255,255,255,1);
-    }
+.puzzelDisplay button:hover {
+   cursor:pointer;
+    background-color: white;
+    color:black;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  }
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  }
+  to {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+  }
 }
