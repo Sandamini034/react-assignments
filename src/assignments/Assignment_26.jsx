@@ -289,7 +289,8 @@ function Assignment_26() {
           id="quit"
           style={{ display: `${displayQuit}` }}
           onClick={() => {
-            setDisplay("block"), setDisplayQuit("none");
+            setDisplay("block"), setDisplayQuit("none"),
+            setGrid(createGrid(puzzleParts));
           }}
         >
           Quit Puzzel
