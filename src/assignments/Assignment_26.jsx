@@ -62,6 +62,7 @@ function shuffleGrid(grid) {
 }
 
 function moveEmptyCell(grid, direction) {
+  //convert into 1D aaray
   const emptyCell = grid.flat().find((cell) => cell.isEmpty);
 
   let { row, col } = emptyCell;
