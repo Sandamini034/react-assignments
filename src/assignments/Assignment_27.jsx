@@ -217,12 +217,14 @@ function Assignment_27() {
 
   return (
     <canvas
-      width={window.innerWidth}
-      height={window.innerHeight}
-      ref={canvasRef}
-      id="canvas"
-      style={{ display: "block" }}
-    />
+    width={window.innerWidth}
+    height={window.innerHeight}
+    ref={canvasRef}
+    id="canvas"
+    style={{ display: "block" ,
+      borderRadius:"20px"
+    }}
+  />
   );
 }
 
