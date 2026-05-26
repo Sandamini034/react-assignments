@@ -91,11 +91,11 @@ function Assignment_28() {
     const frameDuration = 100;
     let animationId;
 
-    const laneX = [100, 230, 360, 490];
+    const laneX = [100,165, 230,295, 360,425, 490];
 
     const cars = Array.from({ length: 3 }, () => ({
       x: laneX[Math.floor(Math.random() * laneX.length)],
-      y: Math.random() * (canvas.height - 150) + 50,
+      y: Math.random() * (canvas.height - 150) + 500,
       frameIndex: Math.floor(Math.random() * position.length),
       width: position[0].width,
       height: position[0].height,
@@ -183,7 +183,6 @@ function Assignment_28() {
           });
 
           if (hasCollision) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "white";
             ctx.font = "30px Arial";
             ctx.fillText(
