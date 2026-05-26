@@ -217,12 +217,11 @@ function Assignment_27() {
 
   return (
     <canvas
-    width={700}
-    height={710}
+    width={window.innerWidth}
+    height={window.innerHeight}
     ref={canvasRef}
     id="canvas"
-    style={{ display: "block" ,
-      borderRadius:"20px"
+    style={{ display: "block" 
     }}
   />
   );
