@@ -24,6 +24,8 @@ function Assignment_28() {
   const roadImageRef = useRef(null);
   const carImageRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  let carDirectionRef = useRef(0);
+  const deltaRef = useRef(16);
 
   const loadImage = (url) => {
     return new Promise((resolve) => {
@@ -51,32 +53,30 @@ function Assignment_28() {
   const moveSpeed = 6;
 
   useEffect(() => {
-    const drive = (e) => {
-      switch (e.key) {
-        case "ArrowLeft":
-          myCarX.current = Math.max(100, myCarX.current - 10);
-          myCarMarginRight.current = 0;
-          myCarMarginLeft.current = 2;
-          setTimeout(() => {
-            myCarMarginLeft.current = 0;
-          }, 150);
-          break;
-        case "ArrowRight":
-          myCarX.current = Math.min(550, myCarX.current + 10);
-          myCarMarginRight.current = 2;
-          myCarMarginLeft.current = 0;
-          setTimeout(() => {
-            myCarMarginRight.current = 0;
-          }, 150);
-          break;
-        default:
-          break;
+    const onKeyDown = (e) => {
+      if (e.key === "ArrowLeft") {
+        carDirectionRef.current = -1;
+        myCarMarginLeft.current = 2;
+      }
+      if (e.key === "ArrowRight") {
+        carDirectionRef.current = 1;
+        myCarMarginRight.current = 2;
+      }
+    };
+    const onKeyUp = (e) => {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        carDirectionRef.current = 0;
+        myCarMarginLeft.current = 0;
+        myCarMarginRight.current = 0;
       }
     };
 
-    window.addEventListener("keydown", (e) => drive(e, myCarX.current));
-    return () =>
-      window.removeEventListener("keydown", (e) => drive(e, myCarX.current));
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
   }, []);
 
   useEffect(() => {
@@ -90,23 +90,30 @@ function Assignment_28() {
     const previousTime = { value: 0 };
     const frameDuration = 100;
     let animationId;
+    let carSpawnTime = 1000;
+    const carSpawnGap = 1000;
 
-    const laneX = [100,165, 230,295, 360,425, 490];
+    const laneX = [100, 165, 230, 295, 360, 425, 490];
 
-    const cars = Array.from({ length: 3 }, () => ({
-      x: laneX[Math.floor(Math.random() * laneX.length)],
-      y: Math.random() * (canvas.height - 150) + 500,
-      frameIndex: Math.floor(Math.random() * position.length),
-      width: position[0].width,
-      height: position[0].height,
-    }));
+    const cars = [];
 
     Promise.all([loadImage(road), loadImage(car)]).then(
       ([roadImage, carImage]) => {
         const update = (currentTime) => {
-          const delta = currentTime - previousTime.value;
+          deltaRef.current = currentTime - previousTime.value;
           previousTime.value = currentTime;
-          timer.value += delta;
+          timer.value += deltaRef.current;
+
+          carSpawnTime += deltaRef.current;
+          if (carSpawnTime >= carSpawnGap) {
+            carSpawnTime = 0;
+            const newCar = {
+              x: laneX[Math.floor(Math.random() * laneX.length)],
+              y: -50 - Math.random() * 300,
+              frameIndex: Math.floor(Math.random() * position.length),
+            };
+            cars.push(newCar);
+          }
 
           roadY.current += moveSpeed;
           if (roadY.current >= canvas.height) {
@@ -119,50 +126,30 @@ function Assignment_28() {
           }
         };
 
-        const MIN_DISTANCE = 150;
-
-        const isSafeLane = (newX, newY) => {
-          return cars.every((c) => {
-            const sameX = c.x === newX;
-            const tooClose = Math.abs(c.y - newY) < MIN_DISTANCE;
-            return !(sameX && tooClose);
-          });
-        };
-
-        const getAvailableLaneAndY = () => {
-          const maxAttempts = 20;
-
-          for (let i = 0; i < maxAttempts; i++) {
-            const newX = laneX[Math.floor(Math.random() * laneX.length)];
-            const newY = -50 - Math.random() * 300;
-
-            if (isSafeLane(newX, newY)) {
-              return { x: newX, y: newY };
+        const updateCarPositions = () => {
+          for (let i = cars.length - 1; i >= 0; i--) {
+            cars[i].y += moveSpeed;
+            if (cars[i].y > canvas.height) {
+              // Remove cars that have moved off the screen
+              //ex:const fruits = ["apple","banana", "cherry"];
+              //fruits.splice(1, 1) // Removes "banana"
+              cars.splice(i, 1);
             }
           }
-          const laneCount = laneX.map((lane) => ({
-            lane,
-            count: cars.filter((c) => c.x === lane).length,
-          }));
-          const leastUsed = laneCount.sort((a, b) => a.count - b.count)[0].lane;
-          return { x: leastUsed, y: -50 - Math.random() * 300 };
-        };
-
-        const updateCarPositions = () => {
-          cars.forEach((carObj) => {
-            carObj.y += moveSpeed;
-            if (carObj.y > canvas.height) {
-              const { x, y } = getAvailableLaneAndY();
-              carObj.x = x;
-              carObj.y = y;
-              carObj.frameIndex = Math.floor(Math.random() * position.length);
-            }
-          });
         };
 
         const draw = (currentTime) => {
           update(currentTime);
           const myFrame = position[4];
+
+          myCarX.current = Math.max(
+            100,
+            Math.min(
+              550,
+              myCarX.current +
+                carDirectionRef.current * moveSpeed * (deltaRef.current / 16)
+            )
+          );
 
           const myCar = {
             x: myCarX.current,
