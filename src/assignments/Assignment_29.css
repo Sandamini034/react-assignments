@@ -1,0 +1,79 @@
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg-color: #4D4D4D;
+    --text-color:#ffffff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root{
+    --bg-color: #ffffff;
+    --text-color:#4D4D4D;
+  }
+}
+
+body[data-theme="dark"]{
+    --bg-color: #4D4D4D;
+    --text-color:#ffffff;
+}
+
+.Mode{
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    height:20vh;
+    width:100vw;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.Mode h1{
+    margin-left:4vw;
+}
+
+.toggle-switch{
+    width:65px;
+    height:36px;
+    box-sizing:border-box;
+    appearance:none;
+    position: absolute;
+    right:5vw;
+    padding:3px;
+    border-radius: 18px;
+    display:flex;
+    align-items:center;
+    transition-property:background-color;
+    transition-duration:0.15s;
+    background-color: #333333;
+    user-select:none;
+    outline:none;
+    border:none;
+}
+
+.toggle-switch::before{
+    content:"";
+    display:inline-block;
+    width:30px;
+    height:30px;
+    border-radius:226px;
+    background-color:#17BB8C;
+    transition-property:background-color,margin-left, transform;
+    transition-duration:0.15s;
+}
+
+.toggle-switch:checked::before{
+    margin-left:calc(100% - 30px);
+    background-color: white;
+}
+
+.toggle-switch:active::before{
+    transform:scale(0.92);
+}
+
+.toggle-switch:checked{
+    background-color: #22CBA4;
+}
+
