@@ -1,4 +1,15 @@
-body[prefers-color-scheme="dark"] {
+:root {
+  --bg-color: #ffffff;
+  --text-color: #4d4d4d;
+  --content-color: #ffffff;
+  --grapgh-background: #f8f8f8;
+  --div-fil: #d7d7d7;
+  --graph-fill: #319bfe;
+  --boxShadow-fill: #f7f7f7;
+  --src-id: url("../assets/light.svg");
+}
+
+[data-theme="dark"] {
   --bg-color: #4d4d4d;
   --text-color: #ffffff;
   --content-color: #333333;
@@ -9,15 +20,17 @@ body[prefers-color-scheme="dark"] {
   --src-id: url("../assets/dark.svg");
 }
 
-body[prefers-color-scheme="light"] {
-  --bg-color: #ffffff;
-  --text-color: #4d4d4d;
-  --content-color: #ffffff;
-  --grapgh-background: #f8f8f8;
-  --div-fil: #d7d7d7;
-  --graph-fill: #319bfe;
-  --boxShadow-fill: #f7f7f7;
-  --src-id: url("../assets/light.svg");
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-color: #4d4d4d;
+    --text-color: #ffffff;
+    --content-color: #333333;
+    --grapgh-background: #3f3f3f;
+    --graph-fill: #2f92f0;
+    --div-fil: #666666;
+    --boxShadow-fill: #333333;
+    --src-id: url("../assets/dark.svg");
+  }
 }
 
 .Mode {
