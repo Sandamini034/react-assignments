@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #1e292f;
+  background-color: #4571F4;
   width: 100vw;
   height: 100vh;
 }
@@ -83,8 +83,11 @@
 
 .toggle-switch {
   margin-bottom: 20px;
-  width: 40px;
-  height: 20px;
+  position:absolute;
+  top:20px;
+  right:20px;
+  width: 55px;
+  height: 33px;
   cursor: pointer;
   accent-color: #4caf50;
 }

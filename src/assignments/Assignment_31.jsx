@@ -96,13 +96,6 @@ function Assignment_31() {
         className="toggle-switch"
         checked={darkMode}
         onChange={toggleDarkMode}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          height: "30px",
-          width: "50px",
-        }}
       />
 
       <audio src={Seoul_city} ref={audioRef} loop />
