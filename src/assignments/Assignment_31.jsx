@@ -114,7 +114,7 @@ function Assignment_31() {
               key={index}
               className="bars"
               style={{
-                height: `${value * 0.15}px`,
+                height: `${Math.pow(value, 2) * 0.0005 + 2 }px`,
               }}
             />
           ))}
