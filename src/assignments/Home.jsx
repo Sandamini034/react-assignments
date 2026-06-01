@@ -38,6 +38,8 @@ function Home(){
         <Link to="/ASG-29" >Assignment-29</Link>
         <Link to="/ASG-30" >Assignment-30</Link>
         <Link to="/ASG-31" >Assignment-31</Link>
+        <Link to="/ASG-32" >Assignment-32</Link>
+        <Link to="/ASG-33" >Assignment-33</Link>
         </nav>
         </div>
     )

@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #button {
+    width: 120px;
+    height: 30px;
+    padding: 0px 12px;
+    border-radius: 8px;
+    background-color: #06c;
+    font-family: "Ubuntu";
+    cursor: pointer;
+    color: #000;
+    border: none;
+    margin-top:100px;
+  }
+
+  #button:active {
+    background-color: #054d96;
+  }
+
+  .display-values {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .value {
+    display: flex;
+    gap: 5px;
+    color:white;
+  }
+
+  .value::before {
+    content: attr(data-label);
+    display: inline-block;
+    font-weight: 600;
+    width: 65px;
+  }
+
+  #error {
+    color: #e93232;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  #error::after {
+    content: "Close and reopen the browser to try again";
+    display: inline-block;
+  }
