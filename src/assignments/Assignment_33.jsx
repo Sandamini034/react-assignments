@@ -11,7 +11,6 @@ function detectCollision(car1, car2) {
     car1.x + buffer > car2.x + car2.width ||
     car1.y + car1.height - buffer < car2.y ||
     car1.y + buffer > car2.y + car2.height;
-
   return !noOverlap;
 }
 
@@ -24,8 +23,10 @@ function Assignment_33() {
   const roadImageRef = useRef(null);
   const carImageRef = useRef(null);
   const [loading, setLoading] = useState(true);
-  let carDirectionRef = useRef(0);
+  const carDirectionRef = useRef(0);
   const deltaRef = useRef(16);
+  const [start, setStart] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   const loadImage = (url) => {
     return new Promise((resolve) => {
@@ -52,32 +53,32 @@ function Assignment_33() {
 
   const moveSpeed = 6;
 
+  // Simple handler — no permission logic here
   useEffect(() => {
-    window.addEventListener("deviceorientation", (event) => {
-      if (event.alpha === null) {
-        alert("This device may not support device orientation");
+    const handler = (event) => {
+      if (event.alpha === null) return;
+      const gamma = event.gamma;
+      if (gamma < -5) {
+        carDirectionRef.current = -1;
+        myCarMarginLeft.current = 2;
+        myCarMarginRight.current = 0;
+      } else if (gamma > 5) {
+        carDirectionRef.current = 1;
+        myCarMarginRight.current = 2;
+        myCarMarginLeft.current = 0;
       } else {
-        const gamma = event.gamma;
-        if (gamma < -10) {
-          carDirectionRef.current = -1;
-          myCarMarginLeft.current = 2;
-          myCarMarginRight.current = 0;
-        } else if (gamma > 10) {
-          carDirectionRef.current = 1;
-          myCarMarginRight.current = 2;
-          myCarMarginLeft.current = 0;
-        } else {
-          carDirectionRef.current = 0;
-          myCarMarginLeft.current = 0;
-          myCarMarginRight.current = 0;
-        }
+        carDirectionRef.current = 0;
+        myCarMarginLeft.current = 0;
+        myCarMarginRight.current = 0;
       }
-    });
-    return window.removeEventListener("deviceorientation", () => {});
+    };
+
+    window.addEventListener("deviceorientation", handler);
+    return () => window.removeEventListener("deviceorientation", handler);
   }, []);
 
   useEffect(() => {
-    if (loading) return;
+    if (!start || loading) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -89,9 +90,7 @@ function Assignment_33() {
     let animationId;
     let carSpawnTime = 1000;
     const carSpawnGap = 1000;
-
     const laneX = [50, 100, 200, 300];
-
     const cars = [];
 
     Promise.all([loadImage(road), loadImage(car)]).then(
@@ -127,9 +126,6 @@ function Assignment_33() {
           for (let i = cars.length - 1; i >= 0; i--) {
             cars[i].y += moveSpeed;
             if (cars[i].y > canvas.height) {
-              // Remove cars that have moved off the screen
-              //ex:const fruits = ["apple","banana", "cherry"];
-              //fruits.splice(1, 1) // Removes "banana"
               cars.splice(i, 1);
             }
           }
@@ -167,14 +163,14 @@ function Assignment_33() {
           });
 
           if (hasCollision) {
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "white";
-            ctx.font = "30px Arial";
-            ctx.fillText(
-              "Game Over!",
-              canvas.width / 2 - 80,
-              canvas.height / 2
-            );
+            ctx.font = "bold 36px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2);
             cancelAnimationFrame(animationId);
+            setGameOver(true);
             return;
           }
 
@@ -194,6 +190,7 @@ function Assignment_33() {
             canvas.width,
             canvas.height
           );
+
           updateCarPositions();
 
           cars.forEach((carObj) => {
@@ -212,19 +209,12 @@ function Assignment_33() {
             );
             ctx.restore();
           });
+
           const skew =
             myCarMarginRight.current * 0.05 - myCarMarginLeft.current * 0.05;
 
           ctx.save();
-          ctx.transform(
-            1, // scaleX
-            skew, // skewY
-            0, // skewX
-            1, // scaleY
-            myCarX.current, // translateX
-            400 // translateY
-          );
-
+          ctx.transform(1, skew, 0, 1, myCarX.current, 400);
           ctx.drawImage(
             carImage,
             myFrame.x,
@@ -246,33 +236,91 @@ function Assignment_33() {
     );
 
     return () => cancelAnimationFrame(animationId);
-  }, [loading]);
+  }, [loading, start]);
+
+  const handleStart = () => {
+    myCarX.current = 230;
+    myCarMarginRight.current = 0;
+    myCarMarginLeft.current = 0;
+    roadY.current = 0;
+    carDirectionRef.current = 0;
+    deltaRef.current = 16;
+    setGameOver(false);
+
+    const beginGame = () => {
+      setStart(false);
+      setTimeout(() => setStart(true), 0);
+    };
+
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function"
+    ) {
+      DeviceOrientationEvent.requestPermission()
+        .then((status) => {
+          if (status === "granted") {
+            beginGame();
+          } else {
+            alert("Please allow device orientation access to play.");
+          }
+        })
+        .catch((err) => {
+          console.error("Orientation permission error:", err);
+          beginGame();
+        });
+    } else {
+      beginGame();
+    }
+  };
 
   if (loading) return <Butterfly />;
 
   return (
-    <div
-      className="gameDisplay"
-      style={{
-        backgroundImage: `url(${car})`,
-        display: "flex",
-        justifyContent: "center",
-        width: `${window.innerWidth}px`,
-        height: `${window.innerHeight}px`,
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        width={400}
-        height={710}
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      {(!start || gameOver) && (
+        <button
+          style={{
+            position: "absolute",
+            backgroundColor: "#005500",
+            borderRadius: "10px",
+            color: "white",
+            top: "38vh",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "10px 20px",
+            fontSize: "16px",
+            cursor: "pointer",
+            zIndex: 1,
+            boxShadow: "inset 0 0px 20px rgba(0, 255, 0, 0.9)",
+          }}
+          onClick={handleStart}
+        >
+          {gameOver ? "Play Again" : "Start Game"}
+        </button>
+      )}
+      <div
+        className="gameDisplay"
         style={{
-          backgroundColor: "#333",
-          display: "block",
-          marginBottom: "0",
-          padding: "0",
-          borderRadius: "20px",
+          backgroundImage: `url(${car})`,
+          display: "flex",
+          justifyContent: "center",
+          width: `${window.innerWidth}px`,
+          height: `${window.innerHeight}px`,
         }}
-      />
+      >
+        <canvas
+          ref={canvasRef}
+          width={400}
+          height={710}
+          style={{
+            backgroundColor: "transparent",
+            display: "block",
+            marginBottom: "0",
+            padding: "0",
+            borderRadius: "20px",
+          }}
+        />
+      </div>
     </div>
   );
 }
