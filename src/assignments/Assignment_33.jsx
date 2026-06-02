@@ -53,7 +53,6 @@ function Assignment_33() {
 
   const moveSpeed = 6;
 
-  // Simple handler — no permission logic here
   useEffect(() => {
     const handler = (event) => {
       if (event.alpha === null) return;
