@@ -1,0 +1,5 @@
+.redux-form-container input {
+  border-radius: 5px;
+  padding: 2px;
+  outline: none
+}
