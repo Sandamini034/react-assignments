@@ -1,7 +1,6 @@
 .redux-form-container,
 .redux-form-container form,
 .reduxBox,
-.redux-form-container .header,
 .bg {
     display: flex;
     flex-direction: column;
@@ -29,9 +28,12 @@
 }
 
 .redux-form-container .header{
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom:2vh;
     margin-top:-5vh;
+    margin-left:15vh;
 }
 
 .redux-form-container form {
