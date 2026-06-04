@@ -6,7 +6,7 @@ function Butterfly({ hovered }) {
    <div style={{display:"flex",
     justifyContent:"center",
     alignItems:"center",
-    marginLeft:"-20%",
+    marginLeft:"-6vw",
    }}>
      <div className="watchOwl">
       <div
