@@ -64,7 +64,10 @@ function Assignment_34() {
       style={{ backgroundImage: `url(${backgroundImage})` }} 
     >
       <div className="redux-form-container">
-        <h2>Redux Form</h2>
+        <div className="header">
+        <Butterfly />
+        <h2>Redux Form </h2>
+        </div>
         <form>
           <Input
             className="input-field"
@@ -115,6 +118,7 @@ function Assignment_34() {
             onChange={handleChange}
           />
           <Button
+            id="inputButton"
             startIcon={<RestartAltIcon />}
             size="small"
             color="secondary"
@@ -126,22 +130,10 @@ function Assignment_34() {
           </Button>
         </form>
 
-        <Box
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: "2px",
-            marginLeft: "10px",
-            flexWrap: "wrap",
-            color: "rgba(255,255,255,0.6)",
-          }}
-        >
-          <Typography style={{ marginTop: "20px", overflow: "hidden", maxWidth: "45vw" }}>
-            Name: {name}
-          </Typography>
-          <Typography>Email: {email}</Typography>
-          <Typography>Age: {age}</Typography>
+        <Box className="reduxBox">
+          <Typography className="typography">Name: {name}</Typography>
+          <Typography className="typography">Email: {email}</Typography>
+          <Typography className="typography">Age: {age}</Typography>
         </Box>
       </div>
     </Box>
