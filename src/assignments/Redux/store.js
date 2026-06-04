@@ -8,15 +8,9 @@ const slice = createSlice({
     age: 20,
   },
   reducers: {
-    setName(state, action) {
-      state.name = action.payload;
-    },
-    setEmail(state, action) {
-      state.email = action.payload;
-      console.log("Email updated:", state.email);
-    },
-    setAge(state, action) {
-      state.age = action.payload;
+    setForm(state, action) {
+      const { name, value } = action.payload;
+      state[name] = value;
     },
     resetForm(state) {
       state.name = "";
@@ -26,7 +20,7 @@ const slice = createSlice({
   },
 });
 
-export const { setName, setEmail, setAge, resetForm } = slice.actions;
+export const { setForm, resetForm } = slice.actions;
 
 const store = configureStore({
   reducer: {

@@ -34,11 +34,11 @@ import Assignment_30 from "./assignments/Assignment_30.jsx";
 import Assignment_31 from "./assignments/Assignment_31.jsx";
 import Assignment_32 from "./assignments/Assignment_32.jsx";
 import Assignment_33 from "./assignments/Assignment_33.jsx";
-import Assignment_34 from "./assignments/Assignment_34.jsx";
+import Assignment_34 from "./assignments/Redux/Assignment_34.jsx";
 import Home from "./assignments/Home.jsx";
 
 import { Provider } from "react-redux"
-import { store } from "./assignments/store"
+import { store } from "./assignments/Redux/store"
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
