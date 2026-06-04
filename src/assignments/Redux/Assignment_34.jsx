@@ -8,22 +8,61 @@ import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import backgrounImage from "./quiz.png";
+import Butterfly from "../Butterfly.jsx";
+import { useEffect, useState } from "react";
+import backgroundImage from "./quiz.png";
 
 function Assignment_34() {
+  const [bgLoaded, setBgLoaded] = useState(false);
+  const [statesReady, setStatesReady] = useState(false);
+
   const dispatch = useDispatch();
 
   const name = useSelector((states) => states.common.name);
   const email = useSelector((states) => states.common.email);
   const age = useSelector((states) => states.common.age);
 
+  useEffect(() => {
+    if (name !== undefined && email !== undefined && age !== undefined) {
+      setStatesReady(true);
+    }
+  }, [name, email, age]);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = backgroundImage;
+    img.onload = () => setBgLoaded(true);
+    img.onerror = () => setBgLoaded(true); 
+  }, []);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(setForm({ name, value }));
   };
 
+  const isLoading = !bgLoaded || !statesReady;
+
+  if (isLoading) {
+    return (
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          backgroundColor: "#0a0a0a",
+        }}
+      >
+        <Butterfly />
+      </Box>
+    );
+  }
+
   return (
-    <Box className="bg">
+    <Box
+      className="bg"
+      style={{ backgroundImage: `url(${backgroundImage})` }} 
+    >
       <div className="redux-form-container">
         <h2>Redux Form</h2>
         <form>
@@ -38,7 +77,7 @@ function Assignment_34() {
                 <AccountCircle />
               </InputAdornment>
             }
-            onChange={(event) => handleChange(event)}
+            onChange={handleChange}
           />
           <Input
             className="input-field"
@@ -51,7 +90,7 @@ function Assignment_34() {
                 <AttachEmailIcon />
               </InputAdornment>
             }
-            onChange={(event) => handleChange(event)}
+            onChange={handleChange}
           />
           <TextField
             className="input-field"
@@ -73,7 +112,7 @@ function Assignment_34() {
                 inputProps: { min: 1, max: 100 },
               },
             }}
-            onChange={(event) => handleChange(event)}
+            onChange={handleChange}
           />
           <Button
             startIcon={<RestartAltIcon />}
@@ -98,13 +137,11 @@ function Assignment_34() {
             color: "rgba(255,255,255,0.6)",
           }}
         >
-          <Typography
-            style={{ marginTop: "20px", overflow: "hidden", maxWidth: "45vw" }}
-          >
+          <Typography style={{ marginTop: "20px", overflow: "hidden", maxWidth: "45vw" }}>
             Name: {name}
           </Typography>
           <Typography>Email: {email}</Typography>
-          <Typography>Age:{age}</Typography>
+          <Typography>Age: {age}</Typography>
         </Box>
       </div>
     </Box>

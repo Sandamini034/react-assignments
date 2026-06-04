@@ -46,7 +46,6 @@
 
 .bg {
     align-items: center;
-    background-image: url("./quiz.png");
     background-repeat: no-repeat;
     background-size: cover;
     gap: 2;
