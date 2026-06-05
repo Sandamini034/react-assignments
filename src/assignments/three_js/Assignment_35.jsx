@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import "./Assignment_35.css";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { Timer } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 function Assignment_35() {
   const mountRef = useRef(null);
@@ -18,6 +19,14 @@ function Assignment_35() {
     const renderer = new THREE.WebGLRenderer({ canvas });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const handleSize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleSize);
 
     const geometry = new THREE.BoxGeometry(3, 3, 3);
     const material = new THREE.MeshBasicMaterial({
@@ -39,14 +48,18 @@ function Assignment_35() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7.5);
+    scene.add(directionalLight);
+
     const loader = new GLTFLoader();
     let model = null;
     loader.load(
-      "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF/DamagedHelmet.gltf",
+      "/react-assignments/sakura_model.glb",
       function (gltf) {
         model = gltf.scene;
-        model.scale.set(0.5, 0.5, 0.5);
-        model.position.set(0, 0, 0);
+        model.scale.set(5, 5, 5);
+        model.position.set(0, -1, 0);
         scene.add(model);
       },
       undefined,
@@ -56,27 +69,25 @@ function Assignment_35() {
     );
 
     camera.position.z = 5;
+    const timer = new Timer();
 
-    let previousTime = 0;
+    function animate(timeStamp) {
+      timer.update(timeStamp);
+      const delta = timer.getDelta();
 
-    function animate(currentTime) {
-      const delta = currentTime - previousTime;
-      const speed = delta / 1000;
-      const step = speed * 1;
-      cube.rotation.x += step;
-      cube.rotation.y += step;
+      cube.rotation.x += delta;
+      cube.rotation.y += delta;
 
       if (model) {
-        model.rotation.y += step;
+        model.rotation.y += delta;
       }
 
       renderer.render(scene, camera);
-      previousTime = currentTime;
-      requestAnimationFrame(animate);
     }
     renderer.setAnimationLoop(animate);
 
     return () => {
+      window.removeEventListener("resize", handleSize);
       renderer.setAnimationLoop(null);
       renderer.dispose();
     };
