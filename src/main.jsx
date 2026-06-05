@@ -35,7 +35,6 @@ import Assignment_31 from "./assignments/Assignment_31.jsx";
 import Assignment_32 from "./assignments/Assignment_32.jsx";
 import Assignment_33 from "./assignments/Assignment_33.jsx";
 import Assignment_34 from "./assignments/Redux/Assignment_34.jsx";
-import Assignment_35 from "./assignments/three_js/Assignment_35.jsx";
 import Home from "./assignments/Home.jsx";
 
 import { Provider } from "react-redux"
@@ -81,7 +80,6 @@ createRoot(document.getElementById("root")).render(
         <Route path="/ASG-32" element={<Assignment_32 />}></Route>
         <Route path="/ASG-33" element={<Assignment_33 />}></Route>
         <Route path="/ASG-34" element={<Assignment_34 />}></Route>
-        <Route path="/ASG-35" element={<Assignment_35 />}></Route>
       </Routes>
     </HashRouter>
       </Provider>
