@@ -72,7 +72,10 @@ function Assignment_24() {
           />
         </div>
       ) : (
-        <h1>Avatar Characters</h1>
+        <>
+         <h1>Avatar Characters</h1>
+         <h3>(Right click)</h3>
+        </>
       )}
     </div>
   );
